@@ -68,9 +68,9 @@
                 <!-- Vídeo 2: Pai Contra Mãe -->
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
                     <div class="aspect-video bg-black relative flex items-center justify-center">
-                        <!-- Lembre-se de trocar SEU_CODIGO_PAI_CONTRA_MAE pelo código do 2º vídeo -->
+                        <!-- COLA O LINK DO TEU VÍDEO NO LUGAR DESTE DENTRO DAS ASPAS QUANDO ESTIVER PRONTO -->
                         <iframe class="w-full h-full" 
-                            src="https://www.youtube.com/embed/SEU_CODIGO_PAI_CONTRA_MAE" 
+                            src="https://www.youtube.com/embed/xYN4UYl1kGI" 
                             title="Pai Contra Mãe" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
@@ -116,7 +116,7 @@
                 </div>
             </div>
 
-            <!-- Indicador de Carregamento (Servidor/IA) -->
+            <!-- Indicador de Carregamento -->
             <div id="quiz-loader" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-4 shadow-xl">
                 <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent"></div>
                 <p class="text-slate-300 text-sm animate-pulse">A carregar perguntas inéditas do servidor...</p>
@@ -159,8 +159,8 @@
         let currentIndex = 0;
         let score = 0;
 
-        // Troque esta URL pelo link do seu backend no Render quando fizer o deploy
-        const BACKEND_URL = "https://SEU-PROJETO-JAVA.onrender.com";
+        // URL do seu backend no Render
+        const BACKEND_URL = "https://machado-de-assis-repertorio-trabalho-de-pt.onrender.com";
 
         function switchTab(tab) {
             const videosTab = document.getElementById('tab-videos');
@@ -220,7 +220,7 @@
             } catch (error) {
                 console.error("Erro ao carregar o quiz:", error);
                 loader.classList.add('hidden');
-                alert("Não foi possível carregar o quiz do servidor Java. Verifique a conexão com o backend.");
+                alert("Não foi possível carregar o quiz do servidor. Verifique a conexão com o backend.");
             } finally {
                 btnStart.disabled = false;
             }
