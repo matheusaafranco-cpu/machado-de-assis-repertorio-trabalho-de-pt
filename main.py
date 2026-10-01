@@ -1,10 +1,10 @@
 import os
 import json
-import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+import google.generativeai as genai
 
 app = FastAPI()
 
@@ -26,103 +26,41 @@ def ler_index():
             return f.read()
     return "<h1>Portal do Machado de Assis</h1><p>index.html não encontrado no repositório.</p>"
 
-FALLBACK_QUIZZES = {
-    "Um Canário": [
-        {
-            "question": "No conto 'Um Canário', qual é a principal reflexão trazida pelo diálogo sobre a ave engaiolada?",
-            "options": [
-                "A relatividade da liberdade e a adaptação ao cativeiro.",
-                "A importância de alimentar animais exóticos.",
-                "O valor comercial dos pássaros no século XIX.",
-                "A superioridade dos animais sobre os seres humanos."
-            ],
-            "answer": 0,
-            "explanation": "O conto explora de forma irônica como a percepção da liberdade muda consoante o ambiente em que o indivíduo se encontra."
-        },
-        {
-            "question": "Quem é o interlocutor que conversa com o narrador acerca do canário?",
-            "options": ["Um boticário", "Um negociante de aves", "Um poeta romântico", "Um vizinho curioso"],
-            "answer": 0,
-            "explanation": "O narrador dialoga com o dono do canário, identificado como sendo um boticário reformado."
-        },
-        {
-            "question": "Em que ano foi publicado o conto 'Um Canário'?",
-            "options": ["1881", "1883", "1899", "1906"],
-            "answer": 1,
-            "explanation": "O conto foi publicado originalmente em 1883, inserindo-se na fase de maturidade literária de Machado de Assis."
-        }
-    ],
-    "Pai Contra Mãe": [
-        {
-            "question": "Qual é a profissão exercida por Cândido Neves, protagonista de 'Pai Contra Mãe'?",
-            "options": ["Apanhador de escravos fugidos", "Professor de literatura", "Funcionário público", "Jornalista"],
-            "answer": 0,
-            "explanation": "Cândido Neves ganhava a vida capturando escravos fugidos, retratando a brutalidade do período escravocrata."
-        },
-        {
-            "question": "Qual é o principal conflito dramático no desfecho do conto?",
-            "options": [
-                "A captura de Arminda para garantir o sustento da família de Cândido.",
-                "A fuga bem-sucedida de todos os escravos da província.",
-                "A desistência de Cândido em caçar escravos.",
-                "O julgamento de Cândido em tribunal."
-            ],
-            "answer": 0,
-            "explanation": "Cândido captura a escrava grávida Arminda, cujo prêmio de resgate resolve a sua aflição financeira, sacrificando o futuro do filho dela."
-        },
-        {
-            "question": "Que crítica social central Machado de Assis faz em 'Pai Contra Mãe'?",
-            "options": [
-                "A crueldade do sistema escravocrata que obrigava os pobres livres a oprimir os escravizados por sobrevivência.",
-                "A falta de escolas públicas no Rio de Janeiro.",
-                "A corrupção na política imperial.",
-                "O preço elevado dos géneros alimentícios."
-            ],
-            "answer": 0,
-            "explanation": "A obra escancara como a escravidão corrompia e embrutecia toda a sociedade, colocando os oprimidos em conflito entre si."
-        }
-    ]
-}
-
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
     api_key = os.getenv("GEMINI_API_KEY")
     
-    if api_key:
-        try:
-            prompt_text = (
-                f"Gere 3 perguntas de múltipla escolha inéditas sobre o conto '{req.tema}' de Machado de Assis. "
-                "Retorne APENAS um JSON válido em formato de array, sem blocos de markdown, sem texto antes ou depois. "
-                "Estrutura exata:\n"
-                "[\n"
-                "  {\n"
-                '    "question": "Pergunta?",\n'
-                '    "options": ["A", "B", "C", "D"],\n'
-                '    "answer": 0,\n'
-                '    "explanation": "Explicação."\n'
-                "  }\n"
-                "]"
-            )
+    if not api_key:
+        raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada no servidor.")
 
-            # Usando o modelo gemini-2.5-flash ou gemini-1.5-flash atualizado
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
-            payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
-            
-            response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=12)
-            
-            if response.status_code == 200:
-                data = response.json()
-                raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
-                clean_json = raw_text.replace("```json", "").replace("```", "").strip()
-                return json.loads(clean_json)
-            else:
-                print(f"Erro da API do Gemini: {response.text}")
-        except Exception as e:
-            print(f"Exceção ao chamar a IA: {e}")
+    try:
+        # Configura a IA do Google oficialmente
+        genai.configure(api_key=api_key)
+        
+        # Usa o modelo Gemini Flash mais recente e rápido
+        model = genai.GenerativeModel('gemini-1.5-flash')
 
-    # Fallback caso a IA falhe
-    tema_escolhido = req.tema if req.tema in FALLBACK_QUIZZES else "Um Canário"
-    if "Ambos" in req.tema:
-        return FALLBACK_QUIZZES["Um Canário"][:2] + FALLBACK_QUIZZES["Pai Contra Mãe"][:1]
-    
-    return FALLBACK_QUIZZES.get(tema_escolhido, FALLBACK_QUIZZES["Um Canário"])
+        prompt_text = (
+            f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
+            "Retorne APENAS um JSON válido em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
+            "Cada objeto do array deve ter estritamente esta estrutura:\n"
+            "[\n"
+            "  {\n"
+            '    "question": "Texto da pergunta?",\n'
+            '    "options": ["Opção A", "Opção B", "Opção C", "Opção D"],\n'
+            '    "answer": 0,\n'
+            '    "explanation": "Explicação detalhada da resposta correta."\n'
+            "  }\n"
+            "]"
+        )
+
+        response = model.generate_content(prompt_text)
+        clean_text = response.text.replace("```json", "").replace("```", "").strip()
+        
+        # Converte a resposta da IA para JSON puro
+        quiz_data = json.loads(clean_text)
+        return quiz_data
+
+    except Exception as e:
+        print(f"Erro crítico ao gerar com a IA do Google: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Erro ao comunicar com a IA do Google: {str(e)}")
