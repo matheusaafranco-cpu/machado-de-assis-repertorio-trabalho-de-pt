@@ -26,7 +26,6 @@ def ler_index():
             return f.read()
     return "<h1>Portal do Machado de Assis</h1><p>index.html não encontrado no repositório.</p>"
 
-# Perguntas de segurança garantidas para a apresentação da Etec
 FALLBACK_QUIZZES = {
     "Um Canário": [
         {
@@ -89,37 +88,39 @@ FALLBACK_QUIZZES = {
 def gerar_quiz(req: QuizRequest):
     api_key = os.getenv("GEMINI_API_KEY")
     
-    # Tenta usar a IA se a chave existir
     if api_key:
         try:
             prompt_text = (
-                f"Gere 3 perguntas de múltipla escolha sobre o conto '{req.tema}' de Machado de Assis. "
+                f"Gere 3 perguntas de múltipla escolha inéditas sobre o conto '{req.tema}' de Machado de Assis. "
                 "Retorne APENAS um JSON válido em formato de array, sem blocos de markdown, sem texto antes ou depois. "
                 "Estrutura exata:\n"
                 "[\n"
                 "  {\n"
-                '    \"question\": \"Pergunta?\",\n'
-                '    \"options\": [\"A\", \"B\", \"C\", \"D\"],\n'
-                '    \"answer\": 0,\n'
-                '    \"explanation\": \"Explicação.\"\n'
+                '    "question": "Pergunta?",\n'
+                '    "options": ["A", "B", "C", "D"],\n'
+                '    "answer": 0,\n'
+                '    "explanation": "Explicação."\n'
                 "  }\n"
                 "]"
             )
 
+            # Usando o modelo gemini-2.5-flash ou gemini-1.5-flash atualizado
             url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={api_key}"
             payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
             
-            response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=8)
+            response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=12)
             
             if response.status_code == 200:
                 data = response.json()
                 raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
                 clean_json = raw_text.replace("```json", "").replace("```", "").strip()
                 return json.loads(clean_json)
+            else:
+                print(f"Erro da API do Gemini: {response.text}")
         except Exception as e:
-            print(f"Aviso da IA (a usar fallback automático): {e}")
+            print(f"Exceção ao chamar a IA: {e}")
 
-    # Se a IA falhar ou demorar, entrega o quiz predefinido instantaneamente
+    # Fallback caso a IA falhe
     tema_escolhido = req.tema if req.tema in FALLBACK_QUIZZES else "Um Canário"
     if "Ambos" in req.tema:
         return FALLBACK_QUIZZES["Um Canário"][:2] + FALLBACK_QUIZZES["Pai Contra Mãe"][:1]
