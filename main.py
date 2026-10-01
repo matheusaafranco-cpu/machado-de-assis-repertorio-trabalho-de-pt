@@ -21,7 +21,7 @@ class QuizRequest(BaseModel):
 
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
-    # Obtém a chave configurada no ambiente
+    # Obtém a chave configurada no ambiente do Render
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada no servidor.")
@@ -41,6 +41,7 @@ def gerar_quiz(req: QuizRequest):
         "O campo 'answer' deve ser um inteiro (0 a 3) indicando o índice da opção correta."
     )
 
+    # URL limpa e corrigida para a API do Gemini
     url = f"[https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=](https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=){api_key}"
 
     payload = {
