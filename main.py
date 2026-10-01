@@ -1,10 +1,10 @@
 import os
 import json
+import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import google.generativeai as genai
 
 app = FastAPI()
 
@@ -31,15 +31,9 @@ def gerar_quiz(req: QuizRequest):
     api_key = os.getenv("GEMINI_API_KEY")
     
     if not api_key:
-        raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada no servidor.")
+        raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada.")
 
     try:
-        # Configura a IA do Google oficialmente
-        genai.configure(api_key=api_key)
-        
-        # Usa o modelo Gemini Flash mais recente e rápido
-        model = genai.GenerativeModel('gemini-1.5-flash')
-
         prompt_text = (
             f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
             "Retorne APENAS um JSON válido em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
@@ -54,13 +48,21 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        response = model.generate_content(prompt_text)
-        clean_text = response.text.replace("```json", "").replace("```", "").strip()
+        # Usando o endpoint atualizado da API v1 para o Gemini Flash
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key={api_key}"
+        payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
         
-        # Converte a resposta da IA para JSON puro
-        quiz_data = json.loads(clean_text)
-        return quiz_data
+        response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=15)
+        
+        if response.status_code == 200:
+            data = response.json()
+            raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
+            clean_json = raw_text.replace("```json", "").replace("```", "").strip()
+            return json.loads(clean_json)
+        else:
+            print(f"Erro da API do Google: {response.text}")
+            raise HTTPException(status_code=500, detail=f"Erro do Google: {response.text}")
 
     except Exception as e:
-        print(f"Erro crítico ao gerar com a IA do Google: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"Erro ao comunicar com a IA do Google: {str(e)}")
+        print(f"Exceção ao comunicar com a IA: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
