@@ -2,6 +2,7 @@ import os
 import json
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
@@ -18,6 +19,13 @@ app.add_middleware(
 
 class QuizRequest(BaseModel):
     tema: str = "Um Canário (Machado de Assis)"
+
+@app.get("/", response_class=HTMLResponse)
+def ler_index():
+    if os.path.exists("index.html"):
+        with open("index.html", "r", encoding="utf-8") as f:
+            return f.read()
+    return "<h1>Portal do Machado de Assis</h1><p>index.html não encontrado no repositório.</p>"
 
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
