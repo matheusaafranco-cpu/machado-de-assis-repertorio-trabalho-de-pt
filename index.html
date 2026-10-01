@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machado de Assis: Canário & Pai Contra Mãe</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-serif-machado { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-amber-500 selection:text-slate-950">
+
+    <!-- Header -->
+    <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center font-serif-machado font-bold text-xl text-white shadow-lg shadow-amber-900/40">M</div>
+                <div>
+                    <h1 class="font-serif-machado text-xl font-bold tracking-wide text-amber-100">Universo Machadiano</h1>
+                    <p class="text-xs text-slate-400">Literatura, Vídeos e Quiz Interativo</p>
+                </div>
+            </div>
+            <nav class="flex items-center gap-2">
+                <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow">Vídeos dos Contos</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Quiz Dinâmico</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 py-8 w-full flex-grow">
+
+        <!-- SEÇÃO: VÍDEOS -->
+        <section id="tab-videos" class="space-y-8">
+            <div class="text-center max-w-2xl mx-auto space-y-2">
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Hospedagem de Vídeos</h2>
+                <p class="text-slate-400 text-sm md:text-base">Assista às adaptações e análises literárias dos clássicos de Machado de Assis.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                
+                <!-- Vídeo 1: Canário -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="aspect-video bg-black relative flex items-center justify-center">
+                        <iframe class="w-full h-full" 
+                            src="https://www.youtube.com/embed/xYN4UYl1kGI" 
+                            title="Um Canário" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-950 text-amber-300 border border-amber-800/50 mb-2">Conto Filosófico</span>
+                            <h3 class="font-serif-machado text-2xl font-bold text-white">Um Canário</h3>
+                            <p class="text-slate-400 text-sm mt-2 leading-relaxed">Publicado em 1883, explora o diálogo entre um narrador e um canário engaiolado, debatendo sobre a liberdade e a percepção da realidade.</p>
+                        </div>
+                        <button onclick="selectQuizTopic('Um Canário')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Um Canário"</button>
+                    </div>
+                </div>
+
+                <!-- Vídeo 2: Pai Contra Mãe -->
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
+                    <div class="aspect-video bg-black relative flex items-center justify-center">
+                        <!-- Lembre-se de trocar SEU_CODIGO_PAI_CONTRA_MAE pelo código do 2º vídeo -->
+                        <iframe class="w-full h-full" 
+                            src="https://www.youtube.com/embed/SEU_CODIGO_PAI_CONTRA_MAE" 
+                            title="Pai Contra Mãe" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
+                        <div>
+                            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-950 text-rose-300 border border-rose-800/50 mb-2">Crítica Social / Escravismo</span>
+                            <h3 class="font-serif-machado text-2xl font-bold text-white">Pai Contra Mãe</h3>
+                            <p class="text-slate-400 text-sm mt-2 leading-relaxed">Uma obra-prima irônica e brutal sobre Cândido Neves, um apanhador de escravos fugidos, escancarando a violência do período escravocrata.</p>
+                        </div>
+                        <button onclick="selectQuizTopic('Pai Contra Mãe')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Pai Contra Mãe"</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SEÇÃO: QUIZ -->
+        <section id="tab-quiz" class="hidden space-y-8 max-w-3xl mx-auto">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Quiz Interativo</h2>
+                <p class="text-slate-400 text-sm">Teste os seus conhecimentos sobre a obra de Machado de Assis com perguntas geradas dinamicamente.</p>
+            </div>
+
+            <!-- Seleção de Tema -->
+            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
+                <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                    <div class="w-full sm:w-auto flex-grow">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Escolha o Tema do Quiz</label>
+                        <select id="quiz-topic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            <option value="Um Canário">Um Canário (Machado de Assis)</option>
+                            <option value="Pai Contra Mãe">Pai Contra Mãe (Machado de Assis)</option>
+                            <option value="Ambos os Contos">Ambos os Contos</option>
+                        </select>
+                    </div>
+                    <div class="w-full sm:w-auto pt-2 sm:pt-5">
+                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-amber-900/30 flex items-center justify-center gap-2">
+                            <span>Gerar Quiz com IA</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicador de Carregamento (Servidor/IA) -->
+            <div id="quiz-loader" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-4 shadow-xl">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent"></div>
+                <p class="text-slate-300 text-sm animate-pulse">A carregar perguntas inéditas do servidor...</p>
+            </div>
+
+            <!-- Área do Quiz -->
+            <div id="quiz-container" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <span id="quiz-progress" class="text-xs font-semibold text-amber-400 tracking-wider uppercase">Questão 1 de 3</span>
+                    <span id="quiz-score" class="text-xs text-slate-400">Pontuação: 0</span>
+                </div>
+
+                <div id="question-box" class="space-y-4"></div>
+
+                <div id="feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Próxima Questão</button>
+            </div>
+
+            <!-- Tela de Resultados -->
+            <div id="result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
+                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🏆</div>
+                <div class="space-y-2">
+                    <h3 class="font-serif-machado text-2xl font-bold text-white">Quiz Concluído!</h3>
+                    <p id="final-score-text" class="text-slate-300 text-sm">Você acertou X de Y questões.</p>
+                </div>
+                <button onclick="carregarQuizDoServidor()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Gerar Novo Quiz Inédito</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
+        <p>&copy; 2026 - Portal Machado de Assis &bull; Todos os direitos reservados</p>
+    </footer>
+
+    <script>
+        let currentQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+
+        // Troque esta URL pelo link do seu backend no Render quando fizer o deploy
+        const BACKEND_URL = "https://SEU-PROJETO-JAVA.onrender.com";
+
+        function switchTab(tab) {
+            const videosTab = document.getElementById('tab-videos');
+            const quizTab = document.getElementById('tab-quiz');
+            const btnVideos = document.getElementById('btn-videos');
+            const btnQuiz = document.getElementById('btn-quiz');
+
+            if (tab === 'videos') {
+                videosTab.classList.remove('hidden');
+                quizTab.classList.add('hidden');
+                btnVideos.className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
+                btnQuiz.className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
+            } else {
+                videosTab.classList.add('hidden');
+                quizTab.classList.remove('hidden');
+                btnQuiz.className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
+                btnVideos.className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
+            }
+        }
+
+        function selectQuizTopic(topic) {
+            document.getElementById('quiz-topic').value = topic;
+            switchTab('quiz');
+        }
+
+        async function carregarQuizDoServidor() {
+            const topic = document.getElementById('quiz-topic').value;
+            const container = document.getElementById('quiz-container');
+            const resultContainer = document.getElementById('result-container');
+            const loader = document.getElementById('quiz-loader');
+            const btnStart = document.getElementById('btn-start-quiz');
+
+            resultContainer.classList.add('hidden');
+            container.classList.add('hidden');
+            loader.classList.remove('hidden');
+            btnStart.disabled = true;
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/gerar`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tema: topic })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Erro na requisição com o servidor.");
+                }
+
+                currentQuestions = await response.json();
+                currentIndex = 0;
+                score = 0;
+
+                loader.classList.add('hidden');
+                container.classList.remove('hidden');
+                renderQuestion();
+
+            } catch (error) {
+                console.error("Erro ao carregar o quiz:", error);
+                loader.classList.add('hidden');
+                alert("Não foi possível carregar o quiz do servidor Java. Verifique a conexão com o backend.");
+            } finally {
+                btnStart.disabled = false;
+            }
+        }
+
+        function renderQuestion() {
+            if (currentIndex >= currentQuestions.length) {
+                showResults();
+                return;
+            }
+
+            const q = currentQuestions[currentIndex];
+            document.getElementById('quiz-progress').innerText = `Questão ${currentIndex + 1} de ${currentQuestions.length}`;
+            document.getElementById('quiz-score').innerText = `Pontuação: ${score}`;
+            
+            const qBox = document.getElementById('question-box');
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('btn-next').classList.add('hidden');
+
+            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${q.question}</h4>`;
+            html += `<div class="space-y-3">`;
+            q.options.forEach((opt, idx) => {
+                html += `<button onclick="checkAnswer(${idx})" class="option-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition">${opt}</button>`;
+            });
+            html += `</div>`;
+            qBox.innerHTML = html;
+        }
+
+        function checkAnswer(selectedIdx) {
+            const q = currentQuestions[currentIndex];
+            const buttons = document.querySelectorAll('.option-btn');
+            const feedbackBox = document.getElementById('feedback-box');
+            const btnNext = document.getElementById('btn-next');
+
+            buttons.forEach(btn => btn.disabled = true);
+
+            if (selectedIdx === q.answer) {
+                buttons[selectedIdx].classList.remove('bg-slate-950', 'border-slate-800');
+                buttons[selectedIdx].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
+                feedbackBox.innerHTML = `<strong>Correto!</strong> ${q.explanation}`;
+                score++;
+            } else {
+                buttons[selectedIdx].classList.remove('bg-slate-950', 'border-slate-800');
+                buttons[selectedIdx].classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
+                buttons[q.answer].classList.remove('bg-slate-950', 'border-slate-800');
+                buttons[q.answer].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
+                feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${q.explanation}`;
+            }
+
+            feedbackBox.classList.remove('hidden');
+            btnNext.classList.remove('hidden');
+            document.getElementById('quiz-score').innerText = `Pontuação: ${score}`;
+        }
+
+        function nextQuestion() {
+            currentIndex++;
+            renderQuestion();
+        }
+
+        function showResults() {
+            document.getElementById('quiz-container').classList.add('hidden');
+            document.getElementById('result-container').classList.remove('hidden');
+            document.getElementById('final-score-text').innerText = `Você acertou ${score} de ${currentQuestions.length} questões.`;
+        }
+    </script>
+</body>
+</html>
