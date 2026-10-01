@@ -52,7 +52,7 @@ def gerar_quiz(req: QuizRequest):
     # Construção do URL dividida em blocos literais simples para evitar o erro da interface
     p1 = "https://"
     p2 = "generativelanguage.googleapis.com"
-    p3 = "/v1beta/models/gemini-2.5-flash:generateContent?key="
+    p3 = "/v1beta/models/gemini-1.5-flash:generateContent?key="
     url = p1 + p2 + p3 + api_key
 
     payload = {
