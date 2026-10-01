@@ -36,7 +36,7 @@ def gerar_quiz(req: QuizRequest):
     try:
         prompt_text = (
             f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
-            "Retorne APENAS um JSON válido em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
+            "Retorne APENAS um JSON puro em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
             "Cada objeto do array deve ter estritamente esta estrutura:\n"
             "[\n"
             "  {\n"
@@ -48,8 +48,8 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        # Usando o modelo gemini-1.5-flash validado para a API v1
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key}"
+        # Utilizando o modelo gemini-2.0-flash atualizado para a API v1
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key={api_key}"
         payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
         
         response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=15)
@@ -57,7 +57,13 @@ def gerar_quiz(req: QuizRequest):
         if response.status_code == 200:
             data = response.json()
             raw_text = data["candidates"][0]["content"]["parts"][0]["text"]
+            
+            # Limpeza rigorosa de crases e blocos caso a IA inclua
             clean_json = raw_text.replace("```json", "").replace("```", "").strip()
+            # Remove eventuais quebras de linha indesejadas antes do parsing
+            if clean_json.startswith("`"):
+                clean_json = clean_json.strip("`").replace("json\n", "").strip()
+                
             return json.loads(clean_json)
         else:
             print(f"Erro da API do Google: {response.text}")
