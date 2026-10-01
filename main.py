@@ -41,7 +41,7 @@ def gerar_quiz(req: QuizRequest):
         "O campo 'answer' deve ser um inteiro (0 a 3) indicando o índice da opção correta."
     )
 
-    # URL limpa e correta
+    # URL limpa e correta para a API do Gemini
     url = f"[https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=](https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=){api_key}"
 
     payload = {
