@@ -48,8 +48,8 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        # Usando o endpoint atualizado da API v1 para o Gemini Flash
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent?key={api_key}"
+        # Usando o modelo gemini-1.5-flash validado para a API v1
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key}"
         payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
         
         response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=15)
