@@ -34,7 +34,6 @@ def gerar_quiz(req: QuizRequest):
         raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada.")
 
     try:
-        # Inicializa o cliente oficial da nova biblioteca google-genai
         client = genai.Client(api_key=api_key)
 
         prompt_text = (
@@ -51,15 +50,14 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        # Utiliza o modelo atualizado e gratuito gemini-2.5-flash
+        # Utiliza o modelo base padrão atual
         response = client.models.generate_content(
-            model='gemini-2.0-flash',
+            model='gemini-2.5-flash',
             contents=prompt_text,
         )
         
         raw_text = response.text
         
-        # Limpeza rigorosa de crases e blocos caso a IA inclua
         clean_json = raw_text.replace("```json", "").replace("```", "").strip()
         if clean_json.startswith("`"):
             clean_json = clean_json.strip("`").replace("json\n", "").strip()
