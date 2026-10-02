@@ -17,7 +17,7 @@ app.add_middleware(
 )
 
 class QuizRequest(BaseModel):
-    tema: str = "Um Canário (Machado de Assis)"
+    tema: str = "Ideias de Canário (Machado de Assis)"
 
 @app.get("/", response_class=HTMLResponse)
 def ler_index():
@@ -28,7 +28,6 @@ def ler_index():
 
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
-    # Lê a chave independentemente de se chama GROQ_API_KEY ou grok_api no Render
     api_key = os.getenv("GROQ_API_KEY") or os.getenv("grok_api")
     
     if not api_key:
@@ -37,8 +36,13 @@ def gerar_quiz(req: QuizRequest):
     try:
         client = Groq(api_key=api_key)
 
+        # Regra condicional para lidar com a opção "Ambos os Contos" sem misturar os dois na mesma pergunta
+        instrucao_tema = f"sobre o conto '{req.tema}' de Machado de Assis."
+        if req.tema == "Ambos os Contos":
+            instrucao_tema = "misturadas (algumas sobre 'Ideias de Canário' e outras sobre 'Pai Contra Mãe'). Cada pergunta deve focar em apenas UM dos contos por vez. Não crie perguntas que exijam relacionar os dois contos simultaneamente."
+
         prompt_text = (
-            f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
+            f"Gere exatamente 10 perguntas de múltipla escolha inéditas e educativas {instrucao_tema} "
             "Retorne APENAS um JSON puro em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
             "Cada objeto do array deve ter estritamente esta estrutura:\n"
             "[\n"
