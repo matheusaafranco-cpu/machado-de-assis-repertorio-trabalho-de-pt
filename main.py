@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import google.generativeai as genai
+from google import genai
 
 app = FastAPI()
 
@@ -34,11 +34,8 @@ def gerar_quiz(req: QuizRequest):
         raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada.")
 
     try:
-        # Configura o SDK oficial do Google Generative AI
-        genai.configure(api_key=api_key)
-        
-        # Usa o modelo flash oficial suportado pelo SDK (gratuito)
-        model = genai.GenerativeModel('gemini-1.5-flash')
+        # Inicializa o cliente oficial da nova biblioteca google-genai
+        client = genai.Client(api_key=api_key)
 
         prompt_text = (
             f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
@@ -54,7 +51,12 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        response = model.generate_content(prompt_text)
+        # Utiliza o modelo atualizado e gratuito gemini-2.5-flash
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=prompt_text,
+        )
+        
         raw_text = response.text
         
         # Limpeza rigorosa de crases e blocos caso a IA inclua
