@@ -53,7 +53,7 @@ def gerar_quiz(req: QuizRequest):
 
         # Utiliza o modelo atualizado e gratuito gemini-2.5-flash
         response = client.models.generate_content(
-            model='gemini-2.5-flash',
+            model='gemini-2.0-flash',
             contents=prompt_text,
         )
         
