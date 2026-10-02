@@ -52,7 +52,7 @@ def gerar_quiz(req: QuizRequest):
         )
 
         completion = client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
+            model="openai/gpt-oss-120b",
             messages=[
                 {"role": "system", "content": "És um assistente especializado em literatura que devolve estritamente JSON puro."},
                 {"role": "user", "content": prompt_text}
