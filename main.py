@@ -4,7 +4,7 @@ from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from google import genai
+from groq import Groq
 
 app = FastAPI()
 
@@ -28,13 +28,14 @@ def ler_index():
 
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
-    api_key = os.getenv("GEMINI_API_KEY")
+    # Lê a chave independentemente de se chama GROQ_API_KEY ou grok_api no Render
+    api_key = os.getenv("GROQ_API_KEY") or os.getenv("grok_api")
     
     if not api_key:
-        raise HTTPException(status_code=500, detail="Chave GEMINI_API_KEY não configurada.")
+        raise HTTPException(status_code=500, detail="Chave da API da Groq não configurada no Render.")
 
     try:
-        client = genai.Client(api_key=api_key)
+        client = Groq(api_key=api_key)
 
         prompt_text = (
             f"Gere exatamente 3 perguntas de múltipla escolha inéditas e educativas sobre o conto '{req.tema}' de Machado de Assis. "
@@ -50,13 +51,16 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        # Utiliza o modelo base padrão atual
-        response = client.models.generate_content(
-            model='gemini-2.5-flash',
-            contents=prompt_text,
+        completion = client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[
+                {"role": "system", "content": "És um assistente especializado em literatura que devolve estritamente JSON puro."},
+                {"role": "user", "content": prompt_text}
+            ],
+            temperature=0.7
         )
         
-        raw_text = response.text
+        raw_text = completion.choices[0].message.content
         
         clean_json = raw_text.replace("```json", "").replace("```", "").strip()
         if clean_json.startswith("`"):
@@ -65,5 +69,5 @@ def gerar_quiz(req: QuizRequest):
         return json.loads(clean_json)
 
     except Exception as e:
-        print(f"Exceção ao comunicar com a IA: {str(e)}")
+        print(f"Exceção ao comunicar com a Groq: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
