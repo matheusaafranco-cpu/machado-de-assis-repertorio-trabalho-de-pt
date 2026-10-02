@@ -48,8 +48,8 @@ def gerar_quiz(req: QuizRequest):
             "]"
         )
 
-        # Utilizando o modelo gemini-2.0-flash atualizado para a API v1
-        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key={api_key}"
+        # Endpoint oficial atualizado para a versão gratuita da API
+        url = f"https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key={api_key}"
         payload = {"contents": [{"parts": [{"text": prompt_text}]}]}
         
         response = requests.post(url, json=payload, headers={"Content-Type": "application/json"}, timeout=15)
@@ -60,7 +60,6 @@ def gerar_quiz(req: QuizRequest):
             
             # Limpeza rigorosa de crases e blocos caso a IA inclua
             clean_json = raw_text.replace("```json", "").replace("```", "").strip()
-            # Remove eventuais quebras de linha indesejadas antes do parsing
             if clean_json.startswith("`"):
                 clean_json = clean_json.strip("`").replace("json\n", "").strip()
                 
