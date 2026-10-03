@@ -24,6 +24,10 @@ supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
 class QuizRequest(BaseModel):
     tema: str = "Ideias de Canário (Machado de Assis)"
 
+class SimuladoRequest(BaseModel):
+    livro: str
+    instituicao: str
+
 class UserQuestionRequest(BaseModel):
     autor: str
     pergunta: str
@@ -86,6 +90,52 @@ def gerar_quiz(req: QuizRequest):
 
     except Exception as e:
         print(f"Exceção ao comunicar com a Groq: {str(e)}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/simulado/gerar")
+def gerar_simulado(req: SimuladoRequest):
+    api_key = os.getenv("GROQ_API_KEY") or os.getenv("grok_api")
+    if not api_key:
+        raise HTTPException(status_code=500, detail="Chave da API da Groq não configurada no Render.")
+
+    try:
+        client = Groq(api_key=api_key)
+        prompt_text = (
+            f"Você é um buscador de provas oficiais de vestibulares brasileiros. "
+            f"Encontre e compile exatamente 10 questões REAIS que já caíram em exames da instituição '{req.instituicao}' (ou outras bancas oficiais caso necessário) "
+            f"referentes especificamente à obra literária '{req.livro}'. "
+            "Cada questão DEVE ser uma questão real de vestibular. Na chave 'referencia_oficial', inclua obrigatoriamente a instituição, o ano da prova e o número da questão (Ex: 'Fuvest 2018 - Questão 32' ou 'Enem 2020 - Questão 14'). "
+            "Retorne APENAS um JSON puro em formato de array, sem blocos de markdown, sem crases e sem texto adicional. "
+            "Cada objeto do array deve ter estritamente esta estrutura:\n"
+            "[\n"
+            "  {\n"
+            '    "question": "Enunciado real da questão do vestibular...",\n'
+            '    "options": ["Opção A", "Opção B", "Opção C", "Opção D"],\n'
+            '    "answer": 0,\n'
+            '    "referencia_oficial": "Fuvest 2019 - Questão 41",\n'
+            '    "explanation": "Explicação oficial da banca ou gabarito comentado."\n'
+            "  }\n"
+            "]"
+        )
+
+        completion = client.chat.completions.create(
+            model="openai/gpt-oss-120b",
+            messages=[
+                {"role": "system", "content": "És um historiador de exames vestibulares que recupera questões reais e devolve estritamente JSON puro."},
+                {"role": "user", "content": prompt_text}
+            ],
+            temperature=0.3
+        )
+        
+        raw_text = completion.choices[0].message.content
+        clean_json = raw_text.replace("```json", "").replace("```", "").strip()
+        if clean_json.startswith("`"):
+            clean_json = clean_json.strip("`").replace("json\n", "").strip()
+            
+        return json.loads(clean_json)
+
+    except Exception as e:
+        print(f"Exceção ao gerar simulado: {str(e)}")
         raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/quiz/sugerir")
