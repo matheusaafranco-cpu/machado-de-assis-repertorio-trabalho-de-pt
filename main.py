@@ -32,6 +32,7 @@ class UserQuestionRequest(BaseModel):
     explicacao: str
 
 class ChatRequest(BaseModel):
+    livro: str
     pergunta: str
 
 @app.get("/", response_class=HTMLResponse)
@@ -39,7 +40,7 @@ def ler_index():
     if os.path.exists("index.html"):
         with open("index.html", "r", encoding="utf-8") as f:
             return f.read()
-    return "<h1>Portal do Machado de Assis</h1><p>index.html não encontrado no repositório.</p>"
+    return "<h1>Portal Literário</h1><p>index.html não encontrado no repositório.</p>"
 
 @app.post("/api/quiz/gerar")
 def gerar_quiz(req: QuizRequest):
@@ -49,7 +50,7 @@ def gerar_quiz(req: QuizRequest):
 
     try:
         client = Groq(api_key=api_key)
-        instrucao_tema = f"sobre o conto '{req.tema}' de Machado de Assis."
+        instrucao_tema = f"sobre o conto/livro '{req.tema}'."
         if req.tema == "Ambos os Contos":
             instrucao_tema = "misturadas (algumas sobre 'Ideias de Canário' e outras sobre 'Pai Contra Mãe'). Cada pergunta deve focar em apenas UM dos contos por vez."
 
@@ -96,9 +97,9 @@ def sugerir_pergunta(req: UserQuestionRequest):
     try:
         client = Groq(api_key=api_key)
         prompt_moderacao = (
-            f"Analise a seguinte pergunta enviada por um aluno para um quiz de literatura sobre Machado de Assis:\n"
+            f"Analise a seguinte pergunta enviada por um aluno para um quiz de literatura:\n"
             f"Pergunta: '{req.pergunta}'\n"
-            f"Ela é ofensiva, contém palavrões, é indecente ou totalmente fora do tema de literatura/Machado de Assis? "
+            f"Ela é ofensiva, contém palavrões, é indecente ou totalmente fora do tema de literatura? "
             f"Responda estritamente em formato JSON puro com duas chaves: 'valido' (boolean true ou false) e 'motivo' (string explicativa)."
         )
         
@@ -148,7 +149,7 @@ def chat_literario(req: ChatRequest):
             messages=[
                 {
                     "role": "system", 
-                    "content": "És um assistente virtual inteligente e amigável especializado nas obras de Machado de Assis, com foco particular nos contos 'Ideias de Canário' e 'Pai Contra Mãe'. Responde às dúvidas dos estudantes de forma educativa, clara e literária em português."
+                    "content": f"És um assistente virtual inteligente, amigável e especialista em literatura. O estudante está a tirar uma dúvida específica sobre a obra/tema: '{req.livro}'. Responde de forma clara, educativa e literária em português."
                 },
                 {"role": "user", "content": req.pergunta}
             ],

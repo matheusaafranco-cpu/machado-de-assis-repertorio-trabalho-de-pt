@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machado de Assis: Ideias de Canário & Pai Contra Mãe</title>
+    <title>Universo Literário: Contos & Análises</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts -->
@@ -19,10 +19,10 @@
     <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center font-serif-machado font-bold text-xl text-white shadow-lg shadow-amber-900/40">M</div>
+                <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center font-serif-machado font-bold text-xl text-white shadow-lg shadow-amber-900/40">L</div>
                 <div>
-                    <h1 class="font-serif-machado text-xl font-bold tracking-wide text-amber-100">Universo Machadiano</h1>
-                    <p class="text-xs text-slate-400">Literatura, Vídeos e Quiz Interativo</p>
+                    <h1 class="font-serif-machado text-xl font-bold tracking-wide text-amber-100">Portal Literário</h1>
+                    <p class="text-xs text-slate-400">Vídeos, Quiz e Chat com IA</p>
                 </div>
             </div>
             <nav class="flex flex-wrap items-center gap-2">
@@ -41,7 +41,7 @@
         <section id="tab-videos" class="space-y-8">
             <div class="text-center max-w-2xl mx-auto space-y-2">
                 <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Hospedagem de Vídeos</h2>
-                <p class="text-slate-400 text-sm md:text-base">Assista às adaptações e análises literárias dos clássicos de Machado de Assis.</p>
+                <p class="text-slate-400 text-sm md:text-base">Assista às adaptações e análises literárias dos clássicos.</p>
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
@@ -88,9 +88,9 @@
                 <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
                     <div class="w-full sm:w-auto flex-grow">
                         <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Escolha o Tema do Quiz</label>
-                        <select id="quiz-topic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                            <option value="Ideias de Canário">Ideias de Canário (Machado de Assis)</option>
-                            <option value="Pai Contra Mãe">Pai Contra Mãe (Machado de Assis)</option>
+                        <select id="quiz-topic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 cursor-pointer">
+                            <option value="Ideias de Canário (Machado de Assis)">Ideias de Canário (Machado de Assis)</option>
+                            <option value="Pai Contra Mãe (Machado de Assis)">Pai Contra Mãe (Machado de Assis)</option>
                             <option value="Ambos os Contos">Ambos os Contos</option>
                         </select>
                     </div>
@@ -125,20 +125,30 @@
             </div>
         </section>
 
-        <!-- SEÇÃO: CHAT LITERÁRIO COM IA -->
+        <!-- SEÇÃO: CHAT LITERÁRIO COM SELETOR DE LIVRO -->
         <section id="tab-chat" class="hidden space-y-6 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
                 <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Chat Literário com IA</h2>
-                <p class="text-slate-400 text-sm">Tem alguma dúvida sobre os contos, personagens ou significados de Machado de Assis? Pergunte aqui!</p>
+                <p class="text-slate-400 text-sm">Escolha o livro sobre o qual quer tirar dúvidas e converse com a inteligência artificial!</p>
             </div>
 
-            <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl flex flex-col h-[500px]">
+            <!-- Caixa de seleção do Livro -->
+            <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-xl flex flex-col sm:flex-row gap-3 items-center justify-between">
+                <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Livro / Obra da Dúvida:</label>
+                <select id="chat-livro-select" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 w-full sm:w-80 cursor-pointer">
+                    <option value="Ideias de Canário (Machado de Assis)">Ideias de Canário (Machado de Assis)</option>
+                    <option value="Pai Contra Mãe (Machado de Assis)">Pai Contra Mãe (Machado de Assis)</option>
+                    <option value="Outra Obra Literária Geral">Outra Obra Literária Geral</option>
+                </select>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl flex flex-col h-[450px]">
                 <!-- Caixa de mensagens -->
                 <div id="chat-messages" class="flex-grow p-6 overflow-y-auto space-y-4">
                     <div class="flex items-start gap-3">
                         <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">IA</div>
                         <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-200 max-w-[80%]">
-                            Olá! Sou o seu assistente literário especializado em Machado de Assis. Como posso ajudar com os contos "Ideias de Canário" ou "Pai Contra Mãe" hoje?
+                            Olá! Selecione a obra no menu acima e envie a sua dúvida literária. Estou pronto para ajudar!
                         </div>
                     </div>
                 </div>
@@ -223,7 +233,7 @@
                     <div class="space-y-3">
                         <div>
                             <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Texto da Pergunta</label>
-                            <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto Ideias de Canário?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <input type="text" id="opt-0" placeholder="Alternativa A" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
@@ -234,7 +244,7 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Resposta Correta</label>
-                                <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                                <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 cursor-pointer">
                                     <option value="0">Alternativa 1 (A)</option>
                                     <option value="1">Alternativa 2 (B)</option>
                                     <option value="2">Alternativa 3 (C)</option>
@@ -263,7 +273,7 @@
 
     <!-- Footer -->
     <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
-        <p>&copy; 2026 - trabalho de literatura &bull; 2° eletroeletrônica</p>
+        <p>&copy; 2026 - portal literário &bull; 2° eletroeletrônica</p>
     </footer>
 
     <script>
@@ -338,10 +348,13 @@
             switchTab('quiz');
         }
 
-        // --- FUNÇÕES DO CHAT LITERÁRIO ---
+        // --- FUNÇÕES DO CHAT LITERÁRIO COM SELEÇÃO DE LIVRO ---
         async function enviarMensagemChat() {
             const input = document.getElementById('chat-input');
+            const livroSelect = document.getElementById('chat-livro-select');
             const mensagem = input.value.trim();
+            const livroEscolhido = livroSelect.value;
+
             if (!mensagem) return;
 
             const chatMessages = document.getElementById('chat-messages');
@@ -349,7 +362,10 @@
             // Adiciona a pergunta do utilizador
             chatMessages.innerHTML += `
                 <div class="flex items-start justify-end gap-3">
-                    <div class="bg-amber-600 text-white p-3.5 rounded-2xl text-sm max-w-[80%]">${mensagem}</div>
+                    <div class="bg-amber-600 text-white p-3.5 rounded-2xl text-sm max-w-[80%]">
+                        <span class="block text-[10px] text-amber-200 font-semibold mb-1 uppercase">[Livro: ${livroEscolhido}]</span>
+                        ${mensagem}
+                    </div>
                     <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 flex-shrink-0">Eu</div>
                 </div>
             `;
@@ -361,7 +377,7 @@
             chatMessages.innerHTML += `
                 <div id="${loadingId}" class="flex items-start gap-3">
                     <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">IA</div>
-                    <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-400 animate-pulse">A pensar numa resposta literária...</div>
+                    <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-400 animate-pulse">A consultar o livro selecionado...</div>
                 </div>
             `;
             chatMessages.scrollTop = chatMessages.scrollHeight;
@@ -370,7 +386,7 @@
                 const response = await fetch(`${BACKEND_URL}/api/chat`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ pergunta: mensagem })
+                    body: JSON.stringify({ livro: livroEscolhido, pergunta: mensagem })
                 });
 
                 const data = await response.json();
