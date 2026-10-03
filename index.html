@@ -26,9 +26,10 @@
                 </div>
             </div>
             <nav class="flex flex-wrap items-center gap-2">
-                <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer">Vídeos dos Contos</button>
-                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Quiz Dinâmico</button>
-                <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Comunidade & Ranking</button>
+                <button onclick="switchTab('videos')" id="btn-videos" class="px-3 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer">Vídeos</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Quiz Dinâmico</button>
+                <button onclick="switchTab('chat')" id="btn-chat" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Chat Literário 🤖</button>
+                <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Comunidade & Ranking</button>
             </nav>
         </div>
     </header>
@@ -124,6 +125,32 @@
             </div>
         </section>
 
+        <!-- SEÇÃO: CHAT LITERÁRIO COM IA -->
+        <section id="tab-chat" class="hidden space-y-6 max-w-3xl mx-auto">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Chat Literário com IA</h2>
+                <p class="text-slate-400 text-sm">Tem alguma dúvida sobre os contos, personagens ou significados de Machado de Assis? Pergunte aqui!</p>
+            </div>
+
+            <div class="bg-slate-900 border border-slate-800 rounded-2xl shadow-xl flex flex-col h-[500px]">
+                <!-- Caixa de mensagens -->
+                <div id="chat-messages" class="flex-grow p-6 overflow-y-auto space-y-4">
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">IA</div>
+                        <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-200 max-w-[80%]">
+                            Olá! Sou o seu assistente literário especializado em Machado de Assis. Como posso ajudar com os contos "Ideias de Canário" ou "Pai Contra Mãe" hoje?
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Input de mensagem -->
+                <div class="p-4 border-t border-slate-800 bg-slate-950 rounded-b-2xl flex gap-2">
+                    <input type="text" id="chat-input" placeholder="Escreva a sua dúvida sobre o livro..." class="flex-grow bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none focus:border-amber-500" onkeydown="if(event.key === 'Enter') enviarMensagemChat()">
+                    <button onclick="enviarMensagemChat()" id="btn-enviar-chat" class="px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Enviar</button>
+                </div>
+            </div>
+        </section>
+
         <!-- SEÇÃO: COMUNIDADE & RANKING -->
         <section id="tab-comunidade" class="hidden space-y-8 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
@@ -131,7 +158,7 @@
                 <p class="text-slate-400 text-sm">Identifique-se uma única vez para participar do ranking e enviar as suas perguntas!</p>
             </div>
 
-            <!-- TELA DE CADASTRO / IDENTIFICAÇÃO DO ALUNO -->
+            <!-- TELA DE CADASTRO DO ALUNO -->
             <div id="auth-container" class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
                 <h3 class="font-serif-machado text-xl font-bold text-white">Identificação do Aluno</h3>
                 <p class="text-xs text-slate-400">Insira o seu nome e data de aniversário para desbloquear o envio de perguntas e o questionário.</p>
@@ -148,7 +175,7 @@
                 </div>
             </div>
 
-            <!-- PAINEL PRINCIPAL DA COMUNIDADE (APARECE APÓS O CADASTRO) -->
+            <!-- PAINEL DA COMUNIDADE -->
             <div id="community-dashboard" class="hidden space-y-8">
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
                     <div class="text-xs text-slate-300">
@@ -157,14 +184,12 @@
                     <button onclick="sairCadastro()" class="text-xs text-slate-400 hover:text-rose-400 underline cursor-pointer">Alterar Cadastro</button>
                 </div>
 
-                <!-- Botão para Iniciar o Questionário da Comunidade -->
                 <div id="comunidade-menu" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl text-center space-y-4">
                     <h3 class="font-serif-machado text-xl font-bold text-white">Desafio da Comunidade</h3>
                     <p class="text-slate-300 text-sm">Responda a um questionário completo com as perguntas enviadas pelos colegas!</p>
                     <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Fazer Questionário da Comunidade</button>
                 </div>
 
-                <!-- Contenedor do Quiz da Comunidade em Execução -->
                 <div id="comunidade-quiz-box" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
                     <div class="flex justify-between items-center border-b border-slate-800 pb-4">
                         <span id="comunidade-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1</span>
@@ -173,7 +198,6 @@
                     <div id="comunidade-question-content" class="space-y-4"></div>
                     <div id="comunidade-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
 
-                    <!-- Área de Like Direta na Tela de Resposta -->
                     <div id="comunidade-like-area" class="hidden pt-2 flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
                         <span class="text-xs text-slate-300">Gostou desta pergunta do colega?</span>
                         <button id="btn-like-quiz" onclick="" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
@@ -185,7 +209,6 @@
                     <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition cursor-pointer">Voltar ao Painel</button>
                 </div>
 
-                <!-- Resultado do Quiz da Comunidade -->
                 <div id="comunidade-result-box" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
                     <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🌟</div>
                     <div class="space-y-2">
@@ -195,7 +218,6 @@
                     <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Voltar ao Painel</button>
                 </div>
 
-                <!-- Formulário para Criar Pergunta (Sem precisar digitar o nome novamente) -->
                 <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
                     <h3 class="font-serif-machado text-xl font-bold text-white">Enviar Nova Pergunta</h3>
                     <div class="space-y-3">
@@ -228,7 +250,6 @@
                     </div>
                 </div>
 
-                <!-- Ranking de Alunos da Comunidade (Soma de Likes) -->
                 <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
                     <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Likes Totais)</h3>
                     <div id="ranking-container" class="space-y-4">
@@ -255,7 +276,6 @@
         let comunidadeIndex = 0;
         let comunidadeScore = 0;
 
-        // Verificar cadastro ao carregar
         window.onload = function() {
             verificarCadastro();
         };
@@ -297,14 +317,14 @@
         }
 
         function switchTab(tab) {
-            const tabs = ['videos', 'quiz', 'comunidade'];
+            const tabs = ['videos', 'quiz', 'chat', 'comunidade'];
             tabs.forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`btn-${t}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer";
+                document.getElementById(`btn-${t}`).className = "px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer";
             });
 
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer";
+            document.getElementById(`btn-${tab}`).className = "px-3 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer";
 
             if (tab === 'comunidade') {
                 verificarCadastro();
@@ -318,6 +338,65 @@
             switchTab('quiz');
         }
 
+        // --- FUNÇÕES DO CHAT LITERÁRIO ---
+        async function enviarMensagemChat() {
+            const input = document.getElementById('chat-input');
+            const mensagem = input.value.trim();
+            if (!mensagem) return;
+
+            const chatMessages = document.getElementById('chat-messages');
+            
+            // Adiciona a pergunta do utilizador
+            chatMessages.innerHTML += `
+                <div class="flex items-start justify-end gap-3">
+                    <div class="bg-amber-600 text-white p-3.5 rounded-2xl text-sm max-w-[80%]">${mensagem}</div>
+                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs font-bold text-slate-300 flex-shrink-0">Eu</div>
+                </div>
+            `;
+            input.value = '';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            // Indicador de carregamento da IA
+            const loadingId = "loading-" + Date.now();
+            chatMessages.innerHTML += `
+                <div id="${loadingId}" class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">IA</div>
+                    <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-400 animate-pulse">A pensar numa resposta literária...</div>
+                </div>
+            `;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pergunta: mensagem })
+                });
+
+                const data = await response.json();
+                document.getElementById(loadingId).remove();
+
+                if (!response.ok) throw new Error("Erro ao obter resposta da IA.");
+
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-amber-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">IA</div>
+                        <div class="bg-slate-950 border border-slate-800 p-3.5 rounded-2xl text-sm text-slate-200 max-w-[80%] leading-relaxed">${data.resposta}</div>
+                    </div>
+                `;
+            } catch (error) {
+                document.getElementById(loadingId).remove();
+                chatMessages.innerHTML += `
+                    <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded-full bg-rose-600 flex items-center justify-center text-xs font-bold text-white flex-shrink-0">ERRO</div>
+                        <div class="bg-rose-950 border border-rose-800 p-3.5 rounded-2xl text-sm text-rose-200 max-w-[80%]">Não foi possível ligar ao chat literário. Tente novamente.</div>
+                    </div>
+                `;
+            }
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // --- QUIZ DINÂMICO ---
         async function carregarQuizDoServidor() {
             const topic = document.getElementById('quiz-topic').value;
             const container = document.getElementById('quiz-container');
