@@ -27,7 +27,7 @@
             </div>
             <nav class="flex flex-wrap items-center gap-2">
                 <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow">Vídeos dos Contos</button>
-                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Quiz Dinâmico</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Quiz Dinâmico (IA)</button>
                 <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Comunidade & Ranking</button>
             </nav>
         </div>
@@ -76,11 +76,11 @@
             </div>
         </section>
 
-        <!-- SEÇÃO: QUIZ -->
+        <!-- SEÇÃO: QUIZ GERADO POR IA -->
         <section id="tab-quiz" class="hidden space-y-8 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
-                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Quiz Interativo</h2>
-                <p class="text-slate-400 text-sm">Teste os seus conhecimentos sobre a obra de Machado de Assis com perguntas geradas dinamicamente.</p>
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Quiz Dinâmico (IA)</h2>
+                <p class="text-slate-400 text-sm">Teste os seus conhecimentos com 10 perguntas geradas automaticamente pela inteligência artificial.</p>
             </div>
 
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
@@ -94,7 +94,7 @@
                         </select>
                     </div>
                     <div class="w-full sm:w-auto pt-2 sm:pt-5">
-                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-amber-900/30">Gerar Quiz com IA</button>
+                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Gerar Quiz com IA</button>
                     </div>
                 </div>
             </div>
@@ -127,8 +127,37 @@
         <!-- SEÇÃO: COMUNIDADE & RANKING -->
         <section id="tab-comunidade" class="hidden space-y-8 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
-                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Perguntas da Comunidade</h2>
-                <p class="text-slate-400 text-sm">Crie a sua própria pergunta! A nossa IA analisa o conteúdo na hora para garantir que está correto e adequado.</p>
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Comunidade & Ranking</h2>
+                <p class="text-slate-400 text-sm">Envie a sua pergunta (moderada por IA) ou responda ao questionário completo criado com as perguntas dos colegas!</p>
+            </div>
+
+            <!-- Botão para Iniciar o Questionário da Comunidade -->
+            <div id="comunidade-menu" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl text-center space-y-4">
+                <h3 class="font-serif-machado text-xl font-bold text-white">Desafio da Comunidade</h3>
+                <p class="text-slate-300 text-sm">Junte as perguntas enviadas pelos alunos e responda a um questionário completo de pontuação!</p>
+                <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Fazer Questionário da Comunidade</button>
+            </div>
+
+            <!-- Contenedor do Quiz da Comunidade em Execução -->
+            <div id="comunidade-quiz-box" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                    <span id="comunidade-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1</span>
+                    <span id="comunidade-score" class="text-xs text-slate-400">Pontuação: 0</span>
+                </div>
+                <div id="comunidade-question-content" class="space-y-4"></div>
+                <div id="comunidade-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+                <button id="comunidade-btn-next" onclick="nextComunidadeQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Próxima Questão</button>
+                <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">Voltar ao Ranking e Envio</button>
+            </div>
+
+            <!-- Resultado do Quiz da Comunidade -->
+            <div id="comunidade-result-box" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
+                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🌟</div>
+                <div class="space-y-2">
+                    <h3 class="font-serif-machado text-2xl font-bold text-white">Questionário da Comunidade Concluído!</h3>
+                    <p id="comunidade-final-text" class="text-slate-300 text-sm">Você completou o teste.</p>
+                </div>
+                <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Voltar ao Painel</button>
             </div>
 
             <!-- Formulário para Criar Pergunta -->
@@ -189,6 +218,11 @@
         let currentIndex = 0;
         let score = 0;
         const BACKEND_URL = "";
+
+        // Variáveis para o Questionário da Comunidade
+        let comunidadeQuestions = [];
+        let comunidadeIndex = 0;
+        let comunidadeScore = 0;
 
         function switchTab(tab) {
             const tabs = ['videos', 'quiz', 'comunidade'];
@@ -302,6 +336,93 @@
             document.getElementById('final-score-text').innerText = `Você acertou ${score} de ${currentQuestions.length} questões.`;
         }
 
+        // --- QUESTIONÁRIO DA COMUNIDADE ---
+        async function iniciarQuestionarioComunidade() {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/comunidade`);
+                const perguntas = await response.json();
+
+                if (!perguntas || perguntas.length === 0) {
+                    alert("Ainda não existem perguntas suficientes na comunidade para iniciar o questionário. Crie a primeira!");
+                    return;
+                }
+
+                comunidadeQuestions = perguntas;
+                comunidadeIndex = 0;
+                comunidadeScore = 0;
+
+                document.getElementById('comunidade-menu').classList.add('hidden');
+                document.getElementById('comunidade-result-box').classList.add('hidden');
+                document.getElementById('comunidade-quiz-box').classList.remove('hidden');
+                renderComunidadeQuestion();
+            } catch (error) {
+                alert("Erro ao carregar o questionário da comunidade.");
+            }
+        }
+
+        function renderComunidadeQuestion() {
+            if (comunidadeIndex >= comunidadeQuestions.length) {
+                showComunidadeResults();
+                return;
+            }
+            const p = comunidadeQuestions[comunidadeIndex];
+            document.getElementById('comunidade-progress').innerText = `Questão ${comunidadeIndex + 1} de ${comunidadeQuestions.length} (Autor: ${p.autor})`;
+            document.getElementById('comunidade-score').innerText = `Pontuação: ${comunidadeScore}`;
+
+            const qContent = document.getElementById('comunidade-question-content');
+            document.getElementById('comunidade-feedback-box').classList.add('hidden');
+            document.getElementById('comunidade-btn-next').classList.add('hidden');
+
+            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-2">${p.pergunta}</h4><div class="space-y-3">`;
+            if (p.opcoes && Array.isArray(p.opcoes)) {
+                p.opcoes.forEach((opt, idx) => {
+                    html += `<button onclick="checkComunidadeAnswer(${idx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)})" class="comunidade-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition">${opt}</button>`;
+                });
+            }
+            html += `</div>`;
+            qContent.innerHTML = html;
+        }
+
+        function checkComunidadeAnswer(selectedIdx, correta, explicacao) {
+            const buttons = document.querySelectorAll('.comunidade-opt-btn');
+            const feedbackBox = document.getElementById('comunidade-feedback-box');
+            const btnNext = document.getElementById('comunidade-btn-next');
+
+            buttons.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correta) {
+                buttons[selectedIdx].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
+                feedbackBox.innerHTML = `<strong>Correto!</strong> ${explicacao}`;
+                comunidadeScore++;
+            } else {
+                buttons[selectedIdx].classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
+                buttons[correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
+                feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${explicacao}`;
+            }
+            feedbackBox.classList.remove('hidden');
+            btnNext.classList.remove('hidden');
+            document.getElementById('comunidade-score').innerText = `Pontuação: ${comunidadeScore}`;
+        }
+
+        function nextComunidadeQuestion() {
+            comunidadeIndex++;
+            renderComunidadeQuestion();
+        }
+
+        function showComunidadeResults() {
+            document.getElementById('comunidade-quiz-box').classList.add('hidden');
+            document.getElementById('comunidade-result-box').classList.remove('hidden');
+            document.getElementById('comunidade-final-text').innerText = `Você acertou ${comunidadeScore} de ${comunidadeQuestions.length} questões da comunidade!`;
+        }
+
+        function voltarMenuComunidade() {
+            document.getElementById('comunidade-quiz-box').classList.add('hidden');
+            document.getElementById('comunidade-result-box').classList.add('hidden');
+            document.getElementById('comunidade-menu').classList.remove('hidden');
+        }
+
         async function enviarPergunta() {
             const autor = document.getElementById('user-autor').value;
             const pergunta = document.getElementById('user-pergunta').value;
@@ -368,8 +489,8 @@
                 perguntas.forEach((p, index) => {
                     let opcoesHtml = '';
                     if (p.opcoes && Array.isArray(p.opcoes)) {
-                        p.opcoes.forEach((opt, optIdx) => {
-                            opcoesHtml += `<button onclick='verificarRespostaComunidade(this, ${optIdx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)})' class="w-full text-left p-2.5 rounded-lg border border-slate-800 bg-slate-900 hover:bg-slate-800 text-xs text-slate-200 transition mb-1.5">${opt}</button>`;
+                        p.opcoes.forEach((opt) => {
+                            opcoesHtml += `<div class="p-2 rounded border border-slate-800 bg-slate-900 text-xs text-slate-300 mb-1">${opt}</div>`;
                         });
                     }
 
@@ -383,7 +504,6 @@
                             </div>
                             <h4 class="text-sm font-bold text-white">${p.pergunta}</h4>
                             <div class="space-y-1">${opcoesHtml}</div>
-                            <div id="feedback-comunidade-${p.id}" class="hidden p-2.5 rounded-lg text-xs font-medium"></div>
                         </div>
                     `;
                 });
@@ -391,27 +511,6 @@
             } catch (error) {
                 container.innerHTML = `<p class="text-rose-400 text-sm text-center py-4">Erro ao carregar o ranking da comunidade.</p>`;
             }
-        }
-
-        function verificarRespostaComunidade(btn, selecionada, correta, explicacao) {
-            const parentDiv = btn.parentElement;
-            const botoes = parentDiv.querySelectorAll('button');
-            botoes.forEach(b => b.disabled = true);
-
-            const card = parentDiv.closest('.bg-slate-950');
-            const feedbackDiv = card.querySelector('[id^="feedback-comunidade-"]');
-
-            if (selecionada === correta) {
-                btn.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-                feedbackDiv.className = "p-2.5 rounded-lg text-xs font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
-                feedbackDiv.innerHTML = `<strong>Correto!</strong> ${explicacao}`;
-            } else {
-                btn.classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
-                botoes[correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-                feedbackDiv.className = "p-2.5 rounded-lg text-xs font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
-                feedbackDiv.innerHTML = `<strong>Incorreto.</strong> ${explicacao}`;
-            }
-            feedbackDiv.classList.remove('hidden');
         }
 
         async function darLike(id) {
