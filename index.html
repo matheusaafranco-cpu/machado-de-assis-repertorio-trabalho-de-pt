@@ -25,9 +25,10 @@
                     <p class="text-xs text-slate-400">Literatura, Vídeos e Quiz Interativo</p>
                 </div>
             </div>
-            <nav class="flex items-center gap-2">
+            <nav class="flex flex-wrap items-center gap-2">
                 <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow">Vídeos dos Contos</button>
                 <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Quiz Dinâmico</button>
+                <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Comunidade & Ranking</button>
             </nav>
         </div>
     </header>
@@ -43,26 +44,17 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                
                 <!-- Vídeo 1: Ideias de Canário -->
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
                     <div class="aspect-video bg-black relative flex items-center justify-center">
-                        <iframe class="w-full h-full" 
-                            src="https://www.youtube.com/embed/xYN4UYl1kGI" 
-                            title="Ideias de Canário" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/xYN4UYl1kGI" title="Ideias de Canário" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div>
                             <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-950 text-amber-300 border border-amber-800/50 mb-2">Conto Filosófico</span>
-                            <!-- TÍTULO CORRIGIDO AQUI -->
                             <h3 class="font-serif-machado text-2xl font-bold text-white">Ideias de Canário</h3>
                             <p class="text-slate-400 text-sm mt-2 leading-relaxed">Publicado em 1883, explora o diálogo entre um narrador e um canário engaiolado, debatendo sobre a liberdade e a percepção da realidade.</p>
                         </div>
-                        <!-- BOTÃO CORRIGIDO AQUI -->
                         <button onclick="selectQuizTopic('Ideias de Canário')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Ideias de Canário"</button>
                     </div>
                 </div>
@@ -70,14 +62,7 @@
                 <!-- Vídeo 2: Pai Contra Mãe -->
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
                     <div class="aspect-video bg-black relative flex items-center justify-center">
-                        <!-- COLA O LINK DO TEU VÍDEO NO LUGAR DESTE DENTRO DAS ASPAS QUANDO ESTIVER PRONTO -->
-                        <iframe class="w-full h-full" 
-                            src="https://www.youtube.com/embed/xYN4UYl1kGI" 
-                            title="Pai Contra Mãe" 
-                            frameborder="0" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                        </iframe>
+                        <iframe class="w-full h-full" src="https://www.youtube.com/embed/xYN4UYl1kGI" title="Pai Contra Mãe" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="p-6 flex flex-col flex-grow justify-between space-y-4">
                         <div>
@@ -88,7 +73,6 @@
                         <button onclick="selectQuizTopic('Pai Contra Mãe')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Pai Contra Mãe"</button>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -99,47 +83,37 @@
                 <p class="text-slate-400 text-sm">Teste os seus conhecimentos sobre a obra de Machado de Assis com perguntas geradas dinamicamente.</p>
             </div>
 
-            <!-- Seleção de Tema -->
             <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
                 <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
                     <div class="w-full sm:w-auto flex-grow">
                         <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Escolha o Tema do Quiz</label>
                         <select id="quiz-topic" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                            <!-- OPÇÃO CORRIGIDA AQUI -->
                             <option value="Ideias de Canário">Ideias de Canário (Machado de Assis)</option>
                             <option value="Pai Contra Mãe">Pai Contra Mãe (Machado de Assis)</option>
                             <option value="Ambos os Contos">Ambos os Contos</option>
                         </select>
                     </div>
                     <div class="w-full sm:w-auto pt-2 sm:pt-5">
-                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-amber-900/30 flex items-center justify-center gap-2">
-                            <span>Gerar Quiz com IA</span>
-                        </button>
+                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg shadow-amber-900/30">Gerar Quiz com IA</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Indicador de Carregamento -->
             <div id="quiz-loader" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-4 shadow-xl">
                 <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent"></div>
                 <p class="text-slate-300 text-sm animate-pulse">A carregar 10 perguntas inéditas do servidor...</p>
             </div>
 
-            <!-- Área do Quiz -->
             <div id="quiz-container" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
                 <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-                    <span id="quiz-progress" class="text-xs font-semibold text-amber-400 tracking-wider uppercase">Questão 1 de 10</span>
+                    <span id="quiz-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1 de 10</span>
                     <span id="quiz-score" class="text-xs text-slate-400">Pontuação: 0</span>
                 </div>
-
                 <div id="question-box" class="space-y-4"></div>
-
                 <div id="feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
-
                 <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Próxima Questão</button>
             </div>
 
-            <!-- Tela de Resultados -->
             <div id="result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
                 <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🏆</div>
                 <div class="space-y-2">
@@ -150,37 +124,84 @@
             </div>
         </section>
 
+        <!-- SEÇÃO: COMUNIDADE & RANKING -->
+        <section id="tab-comunidade" class="hidden space-y-8 max-w-3xl mx-auto">
+            <div class="text-center space-y-2">
+                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Perguntas da Comunidade</h2>
+                <p class="text-slate-400 text-sm">Crie a sua própria pergunta! A nossa IA analisa o conteúdo na hora para garantir que está correto e adequado.</p>
+            </div>
+
+            <!-- Formulário para Criar Pergunta -->
+            <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+                <h3 class="font-serif-machado text-xl font-bold text-white">Enviar Nova Pergunta</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Seu Nome / Apelido</label>
+                        <input type="text" id="user-autor" placeholder="Ex: Matheus" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Texto da Pergunta</label>
+                        <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto Ideias de Canário?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="opt-0" placeholder="Alternativa A (Errada ou Certa)" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <input type="text" id="opt-1" placeholder="Alternativa B" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <input type="text" id="opt-2" placeholder="Alternativa C" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <input type="text" id="opt-3" placeholder="Alternativa D" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Índice da Resposta Correta (0 a 3)</label>
+                            <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                                <option value="0">Alternativa 1 (A)</option>
+                                <option value="1">Alternativa 2 (B)</option>
+                                <option value="2">Alternativa 3 (C)</option>
+                                <option value="3">Alternativa 4 (D)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Explicação da Resposta</label>
+                            <input type="text" id="user-explicacao" placeholder="Breve explicação..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                    </div>
+                    <button onclick="enviarPergunta()" id="btn-enviar-pergunta" class="w-full mt-2 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Enviar para Análise da IA e Publicar</button>
+                </div>
+            </div>
+
+            <!-- Ranking da Comunidade -->
+            <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Perguntas (Mais Curtidas)</h3>
+                <div id="ranking-container" class="space-y-4">
+                    <p class="text-slate-400 text-sm text-center py-4">A carregar perguntas da comunidade...</p>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <!-- Footer -->
     <footer class="border-t border-slate-900 bg-slate-950 py-6 text-center text-xs text-slate-500">
-        <p>&copy; 2026 - trabalho de literatura &bull; 2° eletroeletronica </p>
+        <p>&copy; 2026 - trabalho de literatura &bull; 2° eletroeletrônica</p>
     </footer>
 
     <script>
         let currentQuestions = [];
         let currentIndex = 0;
         let score = 0;
-
-        // URL do seu backend no Render
-        const BACKEND_URL = "https://machado-de-assis-repertorio-trabalho-de.onrender.com";
+        const BACKEND_URL = ""; // Deixe vazio se o frontend e backend rodam no mesmo servidor do Render
 
         function switchTab(tab) {
-            const videosTab = document.getElementById('tab-videos');
-            const quizTab = document.getElementById('tab-quiz');
-            const btnVideos = document.getElementById('btn-videos');
-            const btnQuiz = document.getElementById('btn-quiz');
+            const tabs = ['videos', 'quiz', 'comunidade'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                document.getElementById(`btn-${t}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
+            });
 
-            if (tab === 'videos') {
-                videosTab.classList.remove('hidden');
-                quizTab.classList.add('hidden');
-                btnVideos.className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
-                btnQuiz.className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
-            } else {
-                videosTab.classList.add('hidden');
-                quizTab.classList.remove('hidden');
-                btnQuiz.className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
-                btnVideos.className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
+            document.getElementById(`tab-${tab}`).classList.remove('hidden');
+            document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
+
+            if (tab === 'comunidade') {
+                carregarRanking();
             }
         }
 
@@ -208,9 +229,7 @@
                     body: JSON.stringify({ tema: topic })
                 });
 
-                if (!response.ok) {
-                    throw new Error("Erro na requisição com o servidor.");
-                }
+                if (!response.ok) throw new Error("Erro no servidor.");
 
                 currentQuestions = await response.json();
                 currentIndex = 0;
@@ -219,11 +238,9 @@
                 loader.classList.add('hidden');
                 container.classList.remove('hidden');
                 renderQuestion();
-
             } catch (error) {
-                console.error("Erro ao carregar o quiz:", error);
                 loader.classList.add('hidden');
-                alert("Não foi possível carregar o quiz do servidor. Verifique a conexão com o backend.");
+                alert("Não foi possível carregar o quiz. Verifique a conexão.");
             } finally {
                 btnStart.disabled = false;
             }
@@ -234,7 +251,6 @@
                 showResults();
                 return;
             }
-
             const q = currentQuestions[currentIndex];
             document.getElementById('quiz-progress').innerText = `Questão ${currentIndex + 1} de ${currentQuestions.length}`;
             document.getElementById('quiz-score').innerText = `Pontuação: ${score}`;
@@ -243,8 +259,7 @@
             document.getElementById('feedback-box').classList.add('hidden');
             document.getElementById('btn-next').classList.add('hidden');
 
-            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${q.question}</h4>`;
-            html += `<div class="space-y-3">`;
+            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${q.question}</h4><div class="space-y-3">`;
             q.options.forEach((opt, idx) => {
                 html += `<button onclick="checkAnswer(${idx})" class="option-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition">${opt}</button>`;
             });
@@ -261,20 +276,16 @@
             buttons.forEach(btn => btn.disabled = true);
 
             if (selectedIdx === q.answer) {
-                buttons[selectedIdx].classList.remove('bg-slate-950', 'border-slate-800');
                 buttons[selectedIdx].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
                 feedbackBox.innerHTML = `<strong>Correto!</strong> ${q.explanation}`;
                 score++;
             } else {
-                buttons[selectedIdx].classList.remove('bg-slate-950', 'border-slate-800');
                 buttons[selectedIdx].classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
-                buttons[q.answer].classList.remove('bg-slate-950', 'border-slate-800');
                 buttons[q.answer].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
                 feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${q.explanation}`;
             }
-
             feedbackBox.classList.remove('hidden');
             btnNext.classList.remove('hidden');
             document.getElementById('quiz-score').innerText = `Pontuação: ${score}`;
@@ -289,6 +300,87 @@
             document.getElementById('quiz-container').classList.add('hidden');
             document.getElementById('result-container').classList.remove('hidden');
             document.getElementById('final-score-text').innerText = `Você acertou ${score} de ${currentQuestions.length} questões.`;
+        }
+
+        async function enviarPergunta() {
+            const autor = document.getElementById('user-autor').value;
+            const pergunta = document.getElementById('user-pergunta').value;
+            const opcoes = [
+                document.getElementById('opt-0').value,
+                document.getElementById('opt-1').value,
+                document.getElementById('opt-2').value,
+                document.getElementById('opt-3').value
+            ];
+            const resposta_correta = parseInt(document.getElementById('user-correta').value);
+            const explicacao = document.getElementById('user-explicacao').value;
+
+            if (!autor || !pergunta || opcoes.some(o => !o)) {
+                alert("Por favor, preencha todos os campos da pergunta e as 4 alternativas.");
+                return;
+            }
+
+            const btn = document.getElementById('btn-enviar-pergunta');
+            btn.disabled = true;
+            btn.innerText = "A IA está a analisar e moderar a pergunta...";
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/sugerir`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ autor, pergunta, opcoes, resposta_correta, explicacao })
+                });
+
+                const data = await response.json();
+                if (!response.ok) {
+                    throw new Error(data.detail || "Erro ao enviar pergunta.");
+                }
+
+                alert("Sucesso! A IA aprovou a sua pergunta e ela já entrou no ranking da comunidade.");
+                document.getElementById('user-pergunta').value = '';
+                document.getElementById('opt-0').value = '';
+                document.getElementById('opt-1').value = '';
+                document.getElementById('opt-2').value = '';
+                document.getElementById('opt-3').value = '';
+                document.getElementById('user-explicacao').value = '';
+                carregarRanking();
+            } catch (error) {
+                alert(error.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = "Enviar para Análise da IA e Publicar";
+            }
+        }
+
+        async function carregarRanking() {
+            const container = document.getElementById('ranking-container');
+            container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">A carregar ranking...</p>`;
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/comunidade`);
+                const perguntas = await response.json();
+
+                if (perguntas.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">Ainda não há perguntas da comunidade. Seja o primeiro a criar uma!</p>`;
+                    return;
+                }
+
+                let html = '';
+                perguntas.forEach((p, index) => {
+                    html += `
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+                            <div class="flex justify-between items-center text-xs text-amber-400 font-semibold">
+                                <span>#${index + 1} por ${p.autor}</span>
+                                <span class="bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${p.likes || 0} Likes ❤️</span>
+                            </div>
+                            <h4 class="text-sm font-bold text-white">${p.pergunta}</h4>
+                            <p class="text-xs text-slate-400"><strong>Explicação:</strong> ${p.explicacao}</p>
+                        </div>
+                    `;
+                });
+                container.innerHTML = html;
+            } catch (error) {
+                container.innerHTML = `<p class="text-rose-400 text-sm text-center py-4">Erro ao carregar o ranking da comunidade.</p>`;
+            }
         }
     </script>
 </body>
