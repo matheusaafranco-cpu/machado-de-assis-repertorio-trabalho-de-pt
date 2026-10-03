@@ -28,8 +28,8 @@
             <nav class="flex flex-wrap items-center gap-2">
                 <button onclick="switchTab('videos')" id="btn-videos" class="px-3 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer">Vídeos</button>
                 <button onclick="switchTab('quiz')" id="btn-quiz" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Quiz Dinâmico</button>
-                <button onclick="switchTab('simulado')" id="btn-simulado" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Simulados Oficiais 🏛️</button>
-                <button onclick="switchTab('chat')" id="btn-chat" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Chat Literário 🤖</button>
+                <button onclick="switchTab('simulado')" id="btn-simulado" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Simulados Oficiais</button>
+                <button onclick="switchTab('chat')" id="btn-chat" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Chat Literário</button>
                 <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Comunidade & Ranking</button>
             </nav>
         </div>
@@ -117,7 +117,7 @@
             </div>
 
             <div id="result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
-                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🏆</div>
+                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">✓</div>
                 <div class="space-y-2">
                     <h3 class="font-serif-machado text-2xl font-bold text-white">Quiz Concluído!</h3>
                     <p id="final-score-text" class="text-slate-300 text-sm">Você acertou X de Y questões.</p>
@@ -130,7 +130,7 @@
         <section id="tab-simulado" class="hidden space-y-8 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
                 <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Simulados Oficiais (Questões Reais)</h2>
-                <p class="text-slate-400 text-sm">Resolva questões reais que já caíram em vestibulares com indicação exata da fonte e ano.</p>
+                <p class="text-slate-400 text-sm">Resolva questões reais que já caíram em vestibulares.</p>
             </div>
 
             <!-- Caixa de Escolha do Livro (Instituição automática por trás) -->
@@ -145,7 +145,7 @@
                 <!-- Campo oculto configurado automaticamente -->
                 <input type="hidden" id="simulado-instituicao" value="Automático (Misturar Bancas Oficiais)">
                 
-                <button onclick="carregarSimuladoServidor()" id="btn-start-simulado" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Simulado Automático 🏛️</button>
+                <button onclick="carregarSimuladoServidor()" id="btn-start-simulado" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Simulado Automático</button>
             </div>
 
             <div id="simulado-loader" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-4 shadow-xl">
@@ -165,7 +165,7 @@
             </div>
 
             <div id="simulado-result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
-                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🏛️</div>
+                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">✓</div>
                 <div class="space-y-2">
                     <h3 class="font-serif-machado text-2xl font-bold text-white">Simulado Oficial Concluído!</h3>
                     <p id="simulado-final-text" class="text-slate-300 text-sm">Você completou o exame com questões reais.</p>
@@ -257,7 +257,7 @@
                     <div id="comunidade-like-area" class="hidden pt-2 flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
                         <span class="text-xs text-slate-300">Gostou desta pergunta do colega?</span>
                         <button id="btn-like-quiz" onclick="" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
-                            <span>❤️</span> Dar Like (<span id="comunidade-likes-num">0</span>)
+                            <span>Curtir</span> (<span id="comunidade-likes-num">0</span>)
                         </button>
                     </div>
 
@@ -266,7 +266,7 @@
                 </div>
 
                 <div id="comunidade-result-box" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
-                    <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🌟</div>
+                    <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">✓</div>
                     <div class="space-y-2">
                         <h3 class="font-serif-machado text-2xl font-bold text-white">Questionário Concluído!</h3>
                         <p id="comunidade-final-text" class="text-slate-300 text-sm">Você completou o teste.</p>
@@ -307,7 +307,7 @@
                 </div>
 
                 <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
-                    <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Likes Totais)</h3>
+                    <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Curtidas Totais)</h3>
                     <div id="ranking-container" class="space-y-4">
                         <p class="text-slate-400 text-sm text-center py-4">A carregar ranking de alunos...</p>
                     </div>
@@ -728,11 +728,11 @@
             if (jaVotou) {
                 btnLike.disabled = true;
                 btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
-                btnLike.innerHTML = `<span>❤️</span> Já votado`;
+                btnLike.innerHTML = `Já votado`;
             } else {
                 btnLike.disabled = false;
                 btnLike.className = "bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer";
-                btnLike.innerHTML = `<span>❤️</span> Dar Like (<span id="comunidade-likes-num">${currentLikes}</span>)`;
+                btnLike.innerHTML = `Curtir (<span id="comunidade-likes-num">${currentLikes}</span>)`;
                 btnLike.onclick = function() { darLikeNoQuiz(p.id); };
             }
             likeArea.classList.remove('hidden');
@@ -741,7 +741,7 @@
         async function darLikeNoQuiz(id) {
             const jaVotou = localStorage.getItem(`liked_pergunta_${id}`);
             if (jaVotou) {
-                alert("Você só pode dar um único like por pergunta!");
+                alert("Você só pode dar uma única curtida por pergunta!");
                 return;
             }
 
@@ -758,10 +758,10 @@
                     const btnLike = document.getElementById('btn-like-quiz');
                     btnLike.disabled = true;
                     btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
-                    btnLike.innerHTML = `<span>❤️</span> Já votado`;
+                    btnLike.innerHTML = `Já votado`;
                 }
             } catch (error) {
-                console.error("Erro ao dar like:", error);
+                console.error("Erro ao curtir:", error);
             }
         }
 
@@ -881,7 +881,7 @@
                                 </div>
                             </div>
                             <div class="bg-amber-950 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 flex items-center gap-1.5 text-xs font-semibold">
-                                <span>❤️</span> <span>${item.totalLikes} Likes Totais</span>
+                                <span>${item.totalLikes} Curtidas Totais</span>
                             </div>
                         </div>
                     `;
