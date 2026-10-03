@@ -135,7 +135,7 @@ def sugerir_pergunta(req: UserQuestionRequest):
 
 @app.get("/api/quiz/comunidade")
 def listar_perguntas_comunidade():
-    response = supabase.table("perguntas_usuario").select("*").eq("status", "aprovado").order("likes", desc=True).execute()
+    response = supabase.table("perguntas_usuario").select("*").eq("status", "aprovado").execute()
     return response.data
 
 @app.post("/api/quiz/like/{pergunta_id}")

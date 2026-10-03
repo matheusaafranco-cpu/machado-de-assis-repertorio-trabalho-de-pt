@@ -26,9 +26,9 @@
                 </div>
             </div>
             <nav class="flex flex-wrap items-center gap-2">
-                <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow">Vídeos dos Contos</button>
-                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Quiz Dinâmico</button>
-                <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800">Comunidade & Ranking</button>
+                <button onclick="switchTab('videos')" id="btn-videos" class="px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer">Vídeos dos Contos</button>
+                <button onclick="switchTab('quiz')" id="btn-quiz" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Quiz Dinâmico</button>
+                <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Comunidade & Ranking</button>
             </nav>
         </div>
     </header>
@@ -206,11 +206,11 @@
                 </div>
             </div>
 
-            <!-- Ranking da Comunidade -->
+            <!-- Ranking de Alunos da Comunidade (Soma de Likes) -->
             <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
-                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Perguntas da Comunidade</h3>
+                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Likes Totais)</h3>
                 <div id="ranking-container" class="space-y-4">
-                    <p class="text-slate-400 text-sm text-center py-4">A carregar ranking...</p>
+                    <p class="text-slate-400 text-sm text-center py-4">A carregar ranking de alunos...</p>
                 </div>
             </div>
         </section>
@@ -237,11 +237,11 @@
             const tabs = ['videos', 'quiz', 'comunidade'];
             tabs.forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
-                document.getElementById(`btn-${t}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800";
+                document.getElementById(`btn-${t}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer";
             });
 
             document.getElementById(`tab-${tab}`).classList.remove('hidden');
-            document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow";
+            document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer";
 
             if (tab === 'comunidade') {
                 carregarRanking();
@@ -386,14 +386,15 @@
             let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${p.pergunta}</h4><div class="space-y-3">`;
             if (p.opcoes && Array.isArray(p.opcoes)) {
                 p.opcoes.forEach((opt, idx) => {
-                    html += `<button onclick="checkComunidadeAnswer(this, ${idx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)}, ${p.id}, ${p.likes || 0})" class="comunidade-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition cursor-pointer">${opt}</button>`;
+                    html += `<button onclick="checkComunidadeAnswer(this, ${idx})" class="comunidade-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition cursor-pointer">${opt}</button>`;
                 });
             }
             html += `</div>`;
             qContent.innerHTML = html;
         }
 
-        function checkComunidadeAnswer(btn, selectedIdx, correta, explicacao, perguntaId, currentLikes) {
+        function checkComunidadeAnswer(btn, selectedIdx) {
+            const p = comunidadeQuestions[comunidadeIndex];
             const parentDiv = btn.parentElement;
             const buttons = parentDiv.querySelectorAll('.comunidade-opt-btn');
             const feedbackBox = document.getElementById('comunidade-feedback-box');
@@ -402,26 +403,27 @@
 
             buttons.forEach(b => b.disabled = true);
 
-            if (selectedIdx === correta) {
+            if (selectedIdx === p.resposta_correta) {
                 btn.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
-                feedbackBox.innerHTML = `<strong>Correto!</strong> ${explicacao}`;
+                feedbackBox.innerHTML = `<strong>Correto!</strong> ${p.explicacao}`;
                 comunidadeScore++;
             } else {
                 btn.classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
-                buttons[correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                buttons[p.resposta_correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
-                feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${explicacao}`;
+                feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${p.explicacao}`;
             }
             feedbackBox.classList.remove('hidden');
             btnNext.classList.remove('hidden');
             document.getElementById('comunidade-score').innerText = `Pontuação: ${comunidadeScore}`;
 
-            // Configurar botão de like para esta pergunta específica com verificação de único like
+            // Configurar botão de like de forma segura
+            const currentLikes = p.likes || 0;
             document.getElementById('comunidade-likes-num').innerText = currentLikes;
             const btnLike = document.getElementById('btn-like-quiz');
             
-            const jaVotou = localStorage.getItem(`liked_pergunta_${perguntaId}`);
+            const jaVotou = localStorage.getItem(`liked_pergunta_${p.id}`);
             if (jaVotou) {
                 btnLike.disabled = true;
                 btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
@@ -430,7 +432,7 @@
                 btnLike.disabled = false;
                 btnLike.className = "bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer";
                 btnLike.innerHTML = `<span>❤️</span> Dar Like (<span id="comunidade-likes-num">${currentLikes}</span>)`;
-                btnLike.onclick = function() { darLikeNoQuiz(perguntaId); };
+                btnLike.onclick = function() { darLikeNoQuiz(p.id); };
             }
             likeArea.classList.remove('hidden');
         }
@@ -449,6 +451,9 @@
                     localStorage.setItem(`liked_pergunta_${id}`, "true");
                     document.getElementById('comunidade-likes-num').innerText = data.likes;
                     
+                    const p = comunidadeQuestions[comunidadeIndex];
+                    if (p) p.likes = data.likes;
+
                     const btnLike = document.getElementById('btn-like-quiz');
                     btnLike.disabled = true;
                     btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
@@ -528,54 +533,64 @@
 
         async function carregarRanking() {
             const container = document.getElementById('ranking-container');
-            container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">A carregar ranking...</p>`;
+            container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">A carregar ranking de alunos...</p>`;
 
             try {
                 const response = await fetch(`${BACKEND_URL}/api/quiz/comunidade`);
                 const perguntas = await response.json();
 
-                if (perguntas.length === 0) {
-                    container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">Ainda não há perguntas da comunidade. Seja o primeiro a criar uma!</p>`;
+                if (!perguntas || perguntas.length === 0) {
+                    container.innerHTML = `<p class="text-slate-400 text-sm text-center py-4">Ainda não há alunos no ranking.</p>`;
                     return;
                 }
 
-                let html = '';
-                perguntas.forEach((p, index) => {
-                    let opcoesHtml = '';
-                    if (p.opcoes && Array.isArray(p.opcoes)) {
-                        p.opcoes.forEach((opt) => {
-                            opcoesHtml += `<div class="p-2 rounded border border-slate-800 bg-slate-900 text-xs text-slate-300 mb-1">${opt}</div>`;
-                        });
+                // Agrupa por autor e soma todos os likes
+                const autoresMap = {};
+                perguntas.forEach(p => {
+                    const autor = p.autor || "Anónimo";
+                    const likes = p.likes || 0;
+                    if (!autoresMap[autor]) {
+                        autoresMap[autor] = { totalLikes: 0, totalPerguntas: 0 };
                     }
+                    autoresMap[autor].totalLikes += likes;
+                    autoresMap[autor].totalPerguntas += 1;
+                });
+
+                const rankingAutores = Object.keys(autoresMap).map(autor => {
+                    return {
+                        autor: autor,
+                        totalLikes: autoresMap[autor].totalLikes,
+                        totalPerguntas: autoresMap[autor].totalPerguntas
+                    };
+                });
+
+                rankingAutores.sort((a, b) => b.totalLikes - a.totalLikes);
+
+                let html = '<div class="space-y-3">';
+                rankingAutores.forEach((item, index) => {
+                    let posicaoBadge = `#${index + 1}`;
+                    let corBorda = index === 0 ? "border-amber-500/50 bg-amber-950/20" : "border-slate-800 bg-slate-950";
 
                     html += `
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
-                            <div class="flex justify-between items-center text-xs text-amber-400 font-semibold">
-                                <span>#${index + 1} por ${p.autor}</span>
-                                <button onclick="darLike(${p.id})" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-3 py-1 rounded-lg border border-amber-800 transition flex items-center gap-1.5 cursor-pointer">
-                                    <span>❤️</span> <span id="likes-count-${p.id}">${p.likes || 0}</span> Likes
-                                </button>
+                        <div class="${corBorda} border p-4 rounded-xl flex items-center justify-between transition">
+                            <div class="flex items-center gap-3">
+                                <span class="font-serif-machado text-lg font-bold text-amber-400 w-8">${posicaoBadge}</span>
+                                <div>
+                                    <h4 class="text-sm font-bold text-white">${item.autor}</h4>
+                                    <p class="text-xs text-slate-400">${item.totalPerguntas} pergunta(s) criada(s)</p>
+                                </div>
                             </div>
-                            <h4 class="text-sm font-bold text-white">${p.pergunta}</h4>
-                            <div class="space-y-1">${opcoesHtml}</div>
+                            <div class="bg-amber-950 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 flex items-center gap-1.5 text-xs font-semibold">
+                                <span>❤️</span> <span>${item.totalLikes} Likes Totais</span>
+                            </div>
                         </div>
                     `;
                 });
+                html += '</div>';
+
                 container.innerHTML = html;
             } catch (error) {
-                container.innerHTML = `<p class="text-rose-400 text-sm text-center py-4">Erro ao carregar o ranking da comunidade.</p>`;
-            }
-        }
-
-        async function darLike(id) {
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/quiz/like/${id}`, { method: 'POST' });
-                const data = await response.json();
-                if (response.ok) {
-                    document.getElementById(`likes-count-${id}`).innerText = data.likes;
-                }
-            } catch (error) {
-                console.error("Erro ao dar like:", error);
+                container.innerHTML = `<p class="text-rose-400 text-sm text-center py-4">Erro ao carregar o ranking de alunos.</p>`;
             }
         }
     </script>
