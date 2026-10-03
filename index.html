@@ -55,7 +55,7 @@
                             <h3 class="font-serif-machado text-2xl font-bold text-white">Ideias de Canário</h3>
                             <p class="text-slate-400 text-sm mt-2 leading-relaxed">Publicado em 1883, explora o diálogo entre um narrador e um canário engaiolado, debatendo sobre a liberdade e a percepção da realidade.</p>
                         </div>
-                        <button onclick="selectQuizTopic('Ideias de Canário')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Ideias de Canário"</button>
+                        <button onclick="selectQuizTopic('Ideias de Canário')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700 cursor-pointer">Ir para o Quiz sobre "Ideias de Canário"</button>
                     </div>
                 </div>
 
@@ -70,7 +70,7 @@
                             <h3 class="font-serif-machado text-2xl font-bold text-white">Pai Contra Mãe</h3>
                             <p class="text-slate-400 text-sm mt-2 leading-relaxed">Uma obra-prima irônica e brutal sobre Cândido Neves, um apanhador de escravos fugidos, escancarando a violência do período escravocrata.</p>
                         </div>
-                        <button onclick="selectQuizTopic('Pai Contra Mãe')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700">Ir para o Quiz sobre "Pai Contra Mãe"</button>
+                        <button onclick="selectQuizTopic('Pai Contra Mãe')" class="w-full py-2.5 bg-slate-800 hover:bg-amber-700 hover:text-white transition rounded-xl text-sm font-semibold border border-slate-700 cursor-pointer">Ir para o Quiz sobre "Pai Contra Mãe"</button>
                     </div>
                 </div>
             </div>
@@ -94,7 +94,7 @@
                         </select>
                     </div>
                     <div class="w-full sm:w-auto pt-2 sm:pt-5">
-                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Gerar Quiz</button>
+                        <button onclick="carregarQuizDoServidor()" id="btn-start-quiz" class="w-full sm:w-auto px-6 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Quiz</button>
                     </div>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                 </div>
                 <div id="question-box" class="space-y-4"></div>
                 <div id="feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
-                <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Próxima Questão</button>
+                <button id="btn-next" onclick="nextQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Próxima Questão</button>
             </div>
 
             <div id="result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
@@ -120,7 +120,7 @@
                     <h3 class="font-serif-machado text-2xl font-bold text-white">Quiz Concluído!</h3>
                     <p id="final-score-text" class="text-slate-300 text-sm">Você acertou X de Y questões.</p>
                 </div>
-                <button onclick="carregarQuizDoServidor()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Gerar Novo Quiz Inédito</button>
+                <button onclick="carregarQuizDoServidor()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Novo Quiz Inédito</button>
             </div>
         </section>
 
@@ -135,7 +135,7 @@
             <div id="comunidade-menu" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl text-center space-y-4">
                 <h3 class="font-serif-machado text-xl font-bold text-white">Desafio da Comunidade</h3>
                 <p class="text-slate-300 text-sm">Junte as perguntas enviadas pelos alunos e responda a um questionário completo de pontuação!</p>
-                <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Fazer Questionário da Comunidade</button>
+                <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Fazer Questionário da Comunidade</button>
             </div>
 
             <!-- Contenedor do Quiz da Comunidade em Execução -->
@@ -146,8 +146,17 @@
                 </div>
                 <div id="comunidade-question-content" class="space-y-4"></div>
                 <div id="comunidade-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
-                <button id="comunidade-btn-next" onclick="nextComunidadeQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Próxima Questão</button>
-                <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition">Voltar ao Ranking e Envio</button>
+
+                <!-- Área de Like Direta na Tela de Resposta -->
+                <div id="comunidade-like-area" class="hidden pt-2 flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
+                    <span class="text-xs text-slate-300">Gostou desta pergunta do colega?</span>
+                    <button id="btn-like-quiz" onclick="" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
+                        <span>❤️</span> Dar Like (<span id="comunidade-likes-num">0</span>)
+                    </button>
+                </div>
+
+                <button id="comunidade-btn-next" onclick="nextComunidadeQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Próxima Questão</button>
+                <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition cursor-pointer">Voltar ao Ranking e Envio</button>
             </div>
 
             <!-- Resultado do Quiz da Comunidade -->
@@ -157,7 +166,7 @@
                     <h3 class="font-serif-machado text-2xl font-bold text-white">Questionário da Comunidade Concluído!</h3>
                     <p id="comunidade-final-text" class="text-slate-300 text-sm">Você completou o teste.</p>
                 </div>
-                <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Voltar ao Painel</button>
+                <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Voltar ao Painel</button>
             </div>
 
             <!-- Formulário para Criar Pergunta -->
@@ -193,7 +202,7 @@
                             <input type="text" id="user-explicacao" placeholder="Breve explicação..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                         </div>
                     </div>
-                    <button onclick="enviarPergunta()" id="btn-enviar-pergunta" class="w-full mt-2 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg">Enviar para Análise da IA e Publicar</button>
+                    <button onclick="enviarPergunta()" id="btn-enviar-pergunta" class="w-full mt-2 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Enviar para Análise da IA e Publicar</button>
                 </div>
             </div>
 
@@ -201,7 +210,7 @@
             <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
                 <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Perguntas da Comunidade</h3>
                 <div id="ranking-container" class="space-y-4">
-                    <p class="text-slate-400 text-sm text-center py-4">A carregar perguntas da comunidade...</p>
+                    <p class="text-slate-400 text-sm text-center py-4">A carregar ranking...</p>
                 </div>
             </div>
         </section>
@@ -295,7 +304,7 @@
 
             let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${q.question}</h4><div class="space-y-3">`;
             q.options.forEach((opt, idx) => {
-                html += `<button onclick="checkAnswer(${idx})" class="option-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition">${opt}</button>`;
+                html += `<button onclick="checkAnswer(${idx})" class="option-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition cursor-pointer">${opt}</button>`;
             });
             html += `</div>`;
             qBox.innerHTML = html;
@@ -372,31 +381,34 @@
             const qContent = document.getElementById('comunidade-question-content');
             document.getElementById('comunidade-feedback-box').classList.add('hidden');
             document.getElementById('comunidade-btn-next').classList.add('hidden');
+            document.getElementById('comunidade-like-area').classList.add('hidden');
 
-            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-2">${p.pergunta}</h4><div class="space-y-3">`;
+            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${p.pergunta}</h4><div class="space-y-3">`;
             if (p.opcoes && Array.isArray(p.opcoes)) {
                 p.opcoes.forEach((opt, idx) => {
-                    html += `<button onclick="checkComunidadeAnswer(${idx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)})" class="comunidade-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition">${opt}</button>`;
+                    html += `<button onclick="checkComunidadeAnswer(this, ${idx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)}, ${p.id}, ${p.likes || 0})" class="comunidade-opt-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition cursor-pointer">${opt}</button>`;
                 });
             }
             html += `</div>`;
             qContent.innerHTML = html;
         }
 
-        function checkComunidadeAnswer(selectedIdx, correta, explicacao) {
-            const buttons = document.querySelectorAll('.comunidade-opt-btn');
+        function checkComunidadeAnswer(btn, selectedIdx, correta, explicacao, perguntaId, currentLikes) {
+            const parentDiv = btn.parentElement;
+            const buttons = parentDiv.querySelectorAll('.comunidade-opt-btn');
             const feedbackBox = document.getElementById('comunidade-feedback-box');
             const btnNext = document.getElementById('comunidade-btn-next');
+            const likeArea = document.getElementById('comunidade-like-area');
 
             buttons.forEach(b => b.disabled = true);
 
             if (selectedIdx === correta) {
-                buttons[selectedIdx].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                btn.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
                 feedbackBox.innerHTML = `<strong>Correto!</strong> ${explicacao}`;
                 comunidadeScore++;
             } else {
-                buttons[selectedIdx].classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
+                btn.classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
                 buttons[correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
                 feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
                 feedbackBox.innerHTML = `<strong>Incorreto.</strong> ${explicacao}`;
@@ -404,6 +416,47 @@
             feedbackBox.classList.remove('hidden');
             btnNext.classList.remove('hidden');
             document.getElementById('comunidade-score').innerText = `Pontuação: ${comunidadeScore}`;
+
+            // Configurar botão de like para esta pergunta específica com verificação de único like
+            document.getElementById('comunidade-likes-num').innerText = currentLikes;
+            const btnLike = document.getElementById('btn-like-quiz');
+            
+            const jaVotou = localStorage.getItem(`liked_pergunta_${perguntaId}`);
+            if (jaVotou) {
+                btnLike.disabled = true;
+                btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
+                btnLike.innerHTML = `<span>❤️</span> Já votado`;
+            } else {
+                btnLike.disabled = false;
+                btnLike.className = "bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer";
+                btnLike.innerHTML = `<span>❤️</span> Dar Like (<span id="comunidade-likes-num">${currentLikes}</span>)`;
+                btnLike.onclick = function() { darLikeNoQuiz(perguntaId); };
+            }
+            likeArea.classList.remove('hidden');
+        }
+
+        async function darLikeNoQuiz(id) {
+            const jaVotou = localStorage.getItem(`liked_pergunta_${id}`);
+            if (jaVotou) {
+                alert("Você só pode dar um único like por pergunta!");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/like/${id}`, { method: 'POST' });
+                const data = await response.json();
+                if (response.ok) {
+                    localStorage.setItem(`liked_pergunta_${id}`, "true");
+                    document.getElementById('comunidade-likes-num').innerText = data.likes;
+                    
+                    const btnLike = document.getElementById('btn-like-quiz');
+                    btnLike.disabled = true;
+                    btnLike.className = "bg-slate-900 text-slate-500 px-4 py-1.5 rounded-lg border border-slate-800 flex items-center gap-1.5 text-xs font-semibold cursor-not-allowed";
+                    btnLike.innerHTML = `<span>❤️</span> Já votado`;
+                }
+            } catch (error) {
+                console.error("Erro ao dar like:", error);
+            }
         }
 
         function nextComunidadeQuestion() {
@@ -421,6 +474,7 @@
             document.getElementById('comunidade-quiz-box').classList.add('hidden');
             document.getElementById('comunidade-result-box').classList.add('hidden');
             document.getElementById('comunidade-menu').classList.remove('hidden');
+            carregarRanking();
         }
 
         async function enviarPergunta() {
