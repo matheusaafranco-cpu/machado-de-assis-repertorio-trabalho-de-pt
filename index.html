@@ -44,7 +44,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 gap-8">
-                <!-- Vídeo 1: Ideias de Canário -->
+                <!-- Vídeo 1 -->
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
                     <div class="aspect-video bg-black relative flex items-center justify-center">
                         <iframe class="w-full h-full" src="https://www.youtube.com/embed/xYN4UYl1kGI" title="Ideias de Canário" frameborder="0" allowfullscreen></iframe>
@@ -59,7 +59,7 @@
                     </div>
                 </div>
 
-                <!-- Vídeo 2: Pai Contra Mãe -->
+                <!-- Vídeo 2 -->
                 <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden shadow-xl flex flex-col">
                     <div class="aspect-video bg-black relative flex items-center justify-center">
                         <iframe class="w-full h-full" src="https://www.youtube.com/embed/xYN4UYl1kGI" title="Pai Contra Mãe" frameborder="0" allowfullscreen></iframe>
@@ -144,14 +144,14 @@
                         <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto Ideias de Canário?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input type="text" id="opt-0" placeholder="Alternativa A (Errada ou Certa)" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <input type="text" id="opt-0" placeholder="Alternativa A" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                         <input type="text" id="opt-1" placeholder="Alternativa B" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                         <input type="text" id="opt-2" placeholder="Alternativa C" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                         <input type="text" id="opt-3" placeholder="Alternativa D" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                     </div>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Índice da Resposta Correta (0 a 3)</label>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Resposta Correta</label>
                             <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                                 <option value="0">Alternativa 1 (A)</option>
                                 <option value="1">Alternativa 2 (B)</option>
@@ -170,7 +170,7 @@
 
             <!-- Ranking da Comunidade -->
             <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
-                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Perguntas (Mais Curtidas)</h3>
+                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Perguntas da Comunidade</h3>
                 <div id="ranking-container" class="space-y-4">
                     <p class="text-slate-400 text-sm text-center py-4">A carregar perguntas da comunidade...</p>
                 </div>
@@ -188,7 +188,7 @@
         let currentQuestions = [];
         let currentIndex = 0;
         let score = 0;
-        const BACKEND_URL = ""; // Deixe vazio se o frontend e backend rodam no mesmo servidor do Render
+        const BACKEND_URL = "";
 
         function switchTab(tab) {
             const tabs = ['videos', 'quiz', 'comunidade'];
@@ -366,20 +366,63 @@
 
                 let html = '';
                 perguntas.forEach((p, index) => {
+                    let opcoesHtml = '';
+                    if (p.opcoes && Array.isArray(p.opcoes)) {
+                        p.opcoes.forEach((opt, optIdx) => {
+                            opcoesHtml += `<button onclick='verificarRespostaComunidade(this, ${optIdx}, ${p.resposta_correta}, ${JSON.stringify(p.explicacao)})' class="w-full text-left p-2.5 rounded-lg border border-slate-800 bg-slate-900 hover:bg-slate-800 text-xs text-slate-200 transition mb-1.5">${opt}</button>`;
+                        });
+                    }
+
                     html += `
-                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+                        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-3">
                             <div class="flex justify-between items-center text-xs text-amber-400 font-semibold">
                                 <span>#${index + 1} por ${p.autor}</span>
-                                <span class="bg-amber-950 text-amber-300 px-2 py-0.5 rounded border border-amber-800">${p.likes || 0} Likes ❤️</span>
+                                <button onclick="darLike(${p.id})" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-3 py-1 rounded-lg border border-amber-800 transition flex items-center gap-1.5 cursor-pointer">
+                                    <span>❤️</span> <span id="likes-count-${p.id}">${p.likes || 0}</span> Likes
+                                </button>
                             </div>
                             <h4 class="text-sm font-bold text-white">${p.pergunta}</h4>
-                            <p class="text-xs text-slate-400"><strong>Explicação:</strong> ${p.explicacao}</p>
+                            <div class="space-y-1">${opcoesHtml}</div>
+                            <div id="feedback-comunidade-${p.id}" class="hidden p-2.5 rounded-lg text-xs font-medium"></div>
                         </div>
                     `;
                 });
                 container.innerHTML = html;
             } catch (error) {
                 container.innerHTML = `<p class="text-rose-400 text-sm text-center py-4">Erro ao carregar o ranking da comunidade.</p>`;
+            }
+        }
+
+        function verificarRespostaComunidade(btn, selecionada, correta, explicacao) {
+            const parentDiv = btn.parentElement;
+            const botoes = parentDiv.querySelectorAll('button');
+            botoes.forEach(b => b.disabled = true);
+
+            const card = parentDiv.closest('.bg-slate-950');
+            const feedbackDiv = card.querySelector('[id^="feedback-comunidade-"]');
+
+            if (selecionada === correta) {
+                btn.classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackDiv.className = "p-2.5 rounded-lg text-xs font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
+                feedbackDiv.innerHTML = `<strong>Correto!</strong> ${explicacao}`;
+            } else {
+                btn.classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
+                botoes[correta].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
+                feedbackDiv.className = "p-2.5 rounded-lg text-xs font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
+                feedbackDiv.innerHTML = `<strong>Incorreto.</strong> ${explicacao}`;
+            }
+            feedbackDiv.classList.remove('hidden');
+        }
+
+        async function darLike(id) {
+            try {
+                const response = await fetch(`${BACKEND_URL}/api/quiz/like/${id}`, { method: 'POST' });
+                const data = await response.json();
+                if (response.ok) {
+                    document.getElementById(`likes-count-${id}`).innerText = data.likes;
+                }
+            } catch (error) {
+                console.error("Erro ao dar like:", error);
             }
         }
     </script>
