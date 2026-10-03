@@ -128,89 +128,112 @@
         <section id="tab-comunidade" class="hidden space-y-8 max-w-3xl mx-auto">
             <div class="text-center space-y-2">
                 <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Comunidade & Ranking</h2>
-                <p class="text-slate-400 text-sm">Envie a sua pergunta ou responda ao questionário completo criado com as perguntas dos colegas!</p>
+                <p class="text-slate-400 text-sm">Identifique-se uma única vez para participar do ranking e enviar as suas perguntas!</p>
             </div>
 
-            <!-- Botão para Iniciar o Questionário da Comunidade -->
-            <div id="comunidade-menu" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl text-center space-y-4">
-                <h3 class="font-serif-machado text-xl font-bold text-white">Desafio da Comunidade</h3>
-                <p class="text-slate-300 text-sm">Junte as perguntas enviadas pelos alunos e responda a um questionário completo de pontuação!</p>
-                <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Fazer Questionário da Comunidade</button>
-            </div>
-
-            <!-- Contenedor do Quiz da Comunidade em Execução -->
-            <div id="comunidade-quiz-box" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
-                <div class="flex justify-between items-center border-b border-slate-800 pb-4">
-                    <span id="comunidade-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1</span>
-                    <span id="comunidade-score" class="text-xs text-slate-400">Pontuação: 0</span>
-                </div>
-                <div id="comunidade-question-content" class="space-y-4"></div>
-                <div id="comunidade-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
-
-                <!-- Área de Like Direta na Tela de Resposta -->
-                <div id="comunidade-like-area" class="hidden pt-2 flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
-                    <span class="text-xs text-slate-300">Gostou desta pergunta do colega?</span>
-                    <button id="btn-like-quiz" onclick="" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
-                        <span>❤️</span> Dar Like (<span id="comunidade-likes-num">0</span>)
-                    </button>
-                </div>
-
-                <button id="comunidade-btn-next" onclick="nextComunidadeQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Próxima Questão</button>
-                <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition cursor-pointer">Voltar ao Ranking e Envio</button>
-            </div>
-
-            <!-- Resultado do Quiz da Comunidade -->
-            <div id="comunidade-result-box" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
-                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🌟</div>
-                <div class="space-y-2">
-                    <h3 class="font-serif-machado text-2xl font-bold text-white">Questionário da Comunidade Concluído!</h3>
-                    <p id="comunidade-final-text" class="text-slate-300 text-sm">Você completou o teste.</p>
-                </div>
-                <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Voltar ao Painel</button>
-            </div>
-
-            <!-- Formulário para Criar Pergunta -->
-            <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
-                <h3 class="font-serif-machado text-xl font-bold text-white">Enviar Nova Pergunta</h3>
+            <!-- TELA DE CADASTRO / IDENTIFICAÇÃO DO ALUNO -->
+            <div id="auth-container" class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+                <h3 class="font-serif-machado text-xl font-bold text-white">Identificação do Aluno</h3>
+                <p class="text-xs text-slate-400">Insira o seu nome e data de aniversário para desbloquear o envio de perguntas e o questionário.</p>
                 <div class="space-y-3">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Seu Nome / Apelido</label>
-                        <input type="text" id="user-autor" placeholder="Ex: Matheus" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Seu Nome Completo / Apelido</label>
+                        <input type="text" id="auth-nome" placeholder="Ex: Matheus de Almeida" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Texto da Pergunta</label>
-                        <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto Ideias de Canário?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Data de Aniversário</label>
+                        <input type="date" id="auth-nascimento" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input type="text" id="opt-0" placeholder="Alternativa A" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                        <input type="text" id="opt-1" placeholder="Alternativa B" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                        <input type="text" id="opt-2" placeholder="Alternativa C" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                        <input type="text" id="opt-3" placeholder="Alternativa D" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                    </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Resposta Correta</label>
-                            <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                                <option value="0">Alternativa 1 (A)</option>
-                                <option value="1">Alternativa 2 (B)</option>
-                                <option value="2">Alternativa 3 (C)</option>
-                                <option value="3">Alternativa 4 (D)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Explicação da Resposta</label>
-                            <input type="text" id="user-explicacao" placeholder="Breve explicação..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
-                        </div>
-                    </div>
-                    <button onclick="enviarPergunta()" id="btn-enviar-pergunta" class="w-full mt-2 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Enviar para Análise da IA e Publicar</button>
+                    <button onclick="salvarCadastro()" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Entrar na Comunidade</button>
                 </div>
             </div>
 
-            <!-- Ranking de Alunos da Comunidade (Soma de Likes) -->
-            <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
-                <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Likes Totais)</h3>
-                <div id="ranking-container" class="space-y-4">
-                    <p class="text-slate-400 text-sm text-center py-4">A carregar ranking de alunos...</p>
+            <!-- PAINEL PRINCIPAL DA COMUNIDADE (APARECE APÓS O CADASTRO) -->
+            <div id="community-dashboard" class="hidden space-y-8">
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl flex justify-between items-center">
+                    <div class="text-xs text-slate-300">
+                        Logado como: <strong id="logged-user-name" class="text-amber-400"></strong>
+                    </div>
+                    <button onclick="sairCadastro()" class="text-xs text-slate-400 hover:text-rose-400 underline cursor-pointer">Alterar Cadastro</button>
+                </div>
+
+                <!-- Botão para Iniciar o Questionário da Comunidade -->
+                <div id="comunidade-menu" class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl text-center space-y-4">
+                    <h3 class="font-serif-machado text-xl font-bold text-white">Desafio da Comunidade</h3>
+                    <p class="text-slate-300 text-sm">Responda a um questionário completo com as perguntas enviadas pelos colegas!</p>
+                    <button onclick="iniciarQuestionarioComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Fazer Questionário da Comunidade</button>
+                </div>
+
+                <!-- Contenedor do Quiz da Comunidade em Execução -->
+                <div id="comunidade-quiz-box" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
+                    <div class="flex justify-between items-center border-b border-slate-800 pb-4">
+                        <span id="comunidade-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1</span>
+                        <span id="comunidade-score" class="text-xs text-slate-400">Pontuação: 0</span>
+                    </div>
+                    <div id="comunidade-question-content" class="space-y-4"></div>
+                    <div id="comunidade-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                    <!-- Área de Like Direta na Tela de Resposta -->
+                    <div id="comunidade-like-area" class="hidden pt-2 flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800">
+                        <span class="text-xs text-slate-300">Gostou desta pergunta do colega?</span>
+                        <button id="btn-like-quiz" onclick="" class="bg-amber-950 hover:bg-amber-900 text-amber-300 px-4 py-1.5 rounded-lg border border-amber-800 transition flex items-center gap-1.5 text-xs font-semibold cursor-pointer">
+                            <span>❤️</span> Dar Like (<span id="comunidade-likes-num">0</span>)
+                        </button>
+                    </div>
+
+                    <button id="comunidade-btn-next" onclick="nextComunidadeQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Próxima Questão</button>
+                    <button onclick="voltarMenuComunidade()" class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs transition cursor-pointer">Voltar ao Painel</button>
+                </div>
+
+                <!-- Resultado do Quiz da Comunidade -->
+                <div id="comunidade-result-box" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
+                    <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">🌟</div>
+                    <div class="space-y-2">
+                        <h3 class="font-serif-machado text-2xl font-bold text-white">Questionário Concluído!</h3>
+                        <p id="comunidade-final-text" class="text-slate-300 text-sm">Você completou o teste.</p>
+                    </div>
+                    <button onclick="voltarMenuComunidade()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Voltar ao Painel</button>
+                </div>
+
+                <!-- Formulário para Criar Pergunta (Sem precisar digitar o nome novamente) -->
+                <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+                    <h3 class="font-serif-machado text-xl font-bold text-white">Enviar Nova Pergunta</h3>
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Texto da Pergunta</label>
+                            <input type="text" id="user-pergunta" placeholder="Ex: Qual o principal dilema do conto Ideias de Canário?" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input type="text" id="opt-0" placeholder="Alternativa A" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            <input type="text" id="opt-1" placeholder="Alternativa B" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            <input type="text" id="opt-2" placeholder="Alternativa C" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            <input type="text" id="opt-3" placeholder="Alternativa D" class="bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Resposta Correta</label>
+                                <select id="user-correta" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                                    <option value="0">Alternativa 1 (A)</option>
+                                    <option value="1">Alternativa 2 (B)</option>
+                                    <option value="2">Alternativa 3 (C)</option>
+                                    <option value="3">Alternativa 4 (D)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase">Explicação da Resposta</label>
+                                <input type="text" id="user-explicacao" placeholder="Breve explicação..." class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500">
+                            </div>
+                        </div>
+                        <button onclick="enviarPergunta()" id="btn-enviar-pergunta" class="w-full mt-2 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Enviar para Análise da IA e Publicar</button>
+                    </div>
+                </div>
+
+                <!-- Ranking de Alunos da Comunidade (Soma de Likes) -->
+                <div class="bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-4">
+                    <h3 class="font-serif-machado text-xl font-bold text-white">Ranking de Alunos (Likes Totais)</h3>
+                    <div id="ranking-container" class="space-y-4">
+                        <p class="text-slate-400 text-sm text-center py-4">A carregar ranking de alunos...</p>
+                    </div>
                 </div>
             </div>
         </section>
@@ -228,10 +251,50 @@
         let score = 0;
         const BACKEND_URL = "";
 
-        // Variáveis para o Questionário da Comunidade
         let comunidadeQuestions = [];
         let comunidadeIndex = 0;
         let comunidadeScore = 0;
+
+        // Verificar cadastro ao carregar
+        window.onload = function() {
+            verificarCadastro();
+        };
+
+        function verificarCadastro() {
+            const nomeSalvo = localStorage.getItem('machado_user_nome');
+            const authContainer = document.getElementById('auth-container');
+            const dashboard = document.getElementById('community-dashboard');
+
+            if (nomeSalvo) {
+                authContainer.classList.add('hidden');
+                dashboard.classList.remove('hidden');
+                document.getElementById('logged-user-name').innerText = nomeSalvo;
+            } else {
+                authContainer.classList.remove('hidden');
+                dashboard.classList.add('hidden');
+            }
+        }
+
+        function salvarCadastro() {
+            const nome = document.getElementById('auth-nome').value.trim();
+            const nascimento = document.getElementById('auth-nascimento').value;
+
+            if (!nome || !nascimento) {
+                alert("Por favor, preencha o seu nome e a sua data de aniversário.");
+                return;
+            }
+
+            localStorage.setItem('machado_user_nome', nome);
+            localStorage.setItem('machado_user_nascimento', nascimento);
+            verificarCadastro();
+            carregarRanking();
+        }
+
+        function sairCadastro() {
+            localStorage.removeItem('machado_user_nome');
+            localStorage.removeItem('machado_user_nascimento');
+            verificarCadastro();
+        }
 
         function switchTab(tab) {
             const tabs = ['videos', 'quiz', 'comunidade'];
@@ -244,7 +307,9 @@
             document.getElementById(`btn-${tab}`).className = "px-4 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer";
 
             if (tab === 'comunidade') {
-                carregarRanking();
+                verificarCadastro();
+                const nomeSalvo = localStorage.getItem('machado_user_nome');
+                if (nomeSalvo) carregarRanking();
             }
         }
 
@@ -418,7 +483,6 @@
             btnNext.classList.remove('hidden');
             document.getElementById('comunidade-score').innerText = `Pontuação: ${comunidadeScore}`;
 
-            // Configurar botão de like de forma segura
             const currentLikes = p.likes || 0;
             document.getElementById('comunidade-likes-num').innerText = currentLikes;
             const btnLike = document.getElementById('btn-like-quiz');
@@ -483,7 +547,7 @@
         }
 
         async function enviarPergunta() {
-            const autor = document.getElementById('user-autor').value;
+            const autor = localStorage.getItem('machado_user_nome');
             const pergunta = document.getElementById('user-pergunta').value;
             const opcoes = [
                 document.getElementById('opt-0').value,
@@ -544,7 +608,6 @@
                     return;
                 }
 
-                // Agrupa por autor e soma todos os likes
                 const autoresMap = {};
                 perguntas.forEach(p => {
                     const autor = p.autor || "Anónimo";
