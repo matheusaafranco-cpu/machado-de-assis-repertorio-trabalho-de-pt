@@ -22,13 +22,12 @@
                 <div class="w-10 h-10 rounded-xl bg-amber-600 flex items-center justify-center font-serif-machado font-bold text-xl text-white shadow-lg shadow-amber-900/40">L</div>
                 <div>
                     <h1 class="font-serif-machado text-xl font-bold tracking-wide text-amber-100">Portal Literário</h1>
-                    <p class="text-xs text-slate-400">Vídeos, Simulados e Comunidade</p>
+                    <p class="text-xs text-slate-400">Vídeos, Quiz e Comunidade</p>
                 </div>
             </div>
             <nav class="flex flex-wrap items-center gap-2">
                 <button onclick="switchTab('videos')" id="btn-videos" class="px-3 py-2 rounded-lg text-sm font-medium transition bg-amber-600 text-white shadow cursor-pointer">Vídeos</button>
                 <button onclick="switchTab('quiz')" id="btn-quiz" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Quiz Dinâmico</button>
-                <button onclick="switchTab('simulado')" id="btn-simulado" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Simulados Oficiais</button>
                 <button onclick="switchTab('chat')" id="btn-chat" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Chat Literário</button>
                 <button onclick="switchTab('comunidade')" id="btn-comunidade" class="px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer">Comunidade & Ranking</button>
             </nav>
@@ -123,54 +122,6 @@
                     <p id="final-score-text" class="text-slate-300 text-sm">Você acertou X de Y questões.</p>
                 </div>
                 <button onclick="carregarQuizDoServidor()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Novo Quiz Inédito</button>
-            </div>
-        </section>
-
-        <!-- SEÇÃO: SIMULADOS OFICIAIS (QUESTÕES REAIS DE VESTIBULARES - TOTALMENTE AUTOMÁTICO) -->
-        <section id="tab-simulado" class="hidden space-y-8 max-w-3xl mx-auto">
-            <div class="text-center space-y-2">
-                <h2 class="font-serif-machado text-3xl md:text-4xl font-bold text-amber-100">Simulados Oficiais (Questões Reais)</h2>
-                <p class="text-slate-400 text-sm">Resolva questões reais que já caíram em vestibulares.</p>
-            </div>
-
-            <!-- Caixa de Escolha do Livro (Instituição automática por trás) -->
-            <div class="bg-slate-900 border border-slate-800 p-6 rounded-2xl shadow-xl space-y-4">
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 mb-1 uppercase tracking-wider">Escolha o Livro / Obra</label>
-                    <select id="simulado-livro" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-slate-200 focus:outline-none focus:border-amber-500 cursor-pointer">
-                        <option value="Ideias de Canário (Machado de Assis)">Ideias de Canário (Machado de Assis)</option>
-                        <option value="Pai Contra Mãe (Machado de Assis)">Pai Contra Mãe (Machado de Assis)</option>
-                    </select>
-                </div>
-                <!-- Campo oculto configurado automaticamente -->
-                <input type="hidden" id="simulado-instituicao" value="Automático (Misturar Bancas Oficiais)">
-                
-                <button onclick="carregarSimuladoServidor()" id="btn-start-simulado" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Simulado Automático</button>
-            </div>
-
-            <div id="simulado-loader" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-4 shadow-xl">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-4 border-amber-600 border-t-transparent"></div>
-                <p class="text-slate-300 text-sm animate-pulse">A pesquisar banco de dados de provas oficiais anteriores...</p>
-            </div>
-
-            <div id="simulado-container" class="hidden bg-slate-900 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl space-y-6">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-4 gap-2">
-                    <span id="simulado-progress" class="text-xs font-semibold text-amber-400 uppercase">Questão 1 de 10</span>
-                    <span id="simulado-fonte-badge" class="px-3 py-1 bg-amber-950 border border-amber-800 text-amber-300 text-xs font-bold rounded-lg">Fonte: -</span>
-                    <span id="simulado-score" class="text-xs text-slate-400">Pontuação: 0</span>
-                </div>
-                <div id="simulado-question-box" class="space-y-4"></div>
-                <div id="simulado-feedback-box" class="hidden p-4 rounded-xl text-sm font-medium"></div>
-                <button id="simulado-btn-next" onclick="nextSimuladoQuestion()" class="hidden w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Próxima Questão</button>
-            </div>
-
-            <div id="simulado-result-container" class="hidden bg-slate-900 border border-slate-800 p-8 rounded-2xl text-center space-y-6 shadow-xl">
-                <div class="w-16 h-16 bg-amber-950 border border-amber-800 text-amber-400 rounded-2xl mx-auto flex items-center justify-center text-2xl font-bold">✓</div>
-                <div class="space-y-2">
-                    <h3 class="font-serif-machado text-2xl font-bold text-white">Simulado Oficial Concluído!</h3>
-                    <p id="simulado-final-text" class="text-slate-300 text-sm">Você completou o exame com questões reais.</p>
-                </div>
-                <button onclick="carregarSimuladoServidor()" class="px-8 py-3 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl text-sm transition shadow-lg cursor-pointer">Gerar Novo Simulado Automático</button>
             </div>
         </section>
 
@@ -328,10 +279,6 @@
         let score = 0;
         const BACKEND_URL = "";
 
-        let simuladoQuestions = [];
-        let simuladoIndex = 0;
-        let simuladoScore = 0;
-
         let comunidadeQuestions = [];
         let comunidadeIndex = 0;
         let comunidadeScore = 0;
@@ -377,7 +324,7 @@
         }
 
         function switchTab(tab) {
-            const tabs = ['videos', 'quiz', 'simulado', 'chat', 'comunidade'];
+            const tabs = ['videos', 'quiz', 'chat', 'comunidade'];
             tabs.forEach(t => {
                 document.getElementById(`tab-${t}`).classList.add('hidden');
                 document.getElementById(`btn-${t}`).className = "px-3 py-2 rounded-lg text-sm font-medium transition text-slate-400 hover:text-white hover:bg-slate-800 cursor-pointer";
@@ -396,101 +343,6 @@
         function selectQuizTopic(topic) {
             document.getElementById('quiz-topic').value = topic;
             switchTab('quiz');
-        }
-
-        // --- SIMULADOS OFICIAIS (QUESTÕES REAIS) ---
-        async function carregarSimuladoServidor() {
-            const livro = document.getElementById('simulado-livro').value;
-            const instituicao = document.getElementById('simulado-instituicao').value;
-            const container = document.getElementById('simulado-container');
-            const resultContainer = document.getElementById('simulado-result-container');
-            const loader = document.getElementById('simulado-loader');
-            const btnStart = document.getElementById('btn-start-simulado');
-
-            resultContainer.classList.add('hidden');
-            container.classList.add('hidden');
-            loader.classList.remove('hidden');
-            btnStart.disabled = true;
-
-            try {
-                const response = await fetch(`${BACKEND_URL}/api/simulado/gerar`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ livro: livro, instituicao: instituicao })
-                });
-
-                if (!response.ok) throw new Error("Erro no servidor.");
-
-                simuladoQuestions = await response.json();
-                simuladoIndex = 0;
-                simuladoScore = 0;
-
-                loader.classList.add('hidden');
-                container.classList.remove('hidden');
-                renderSimuladoQuestion();
-            } catch (error) {
-                loader.classList.add('hidden');
-                alert("Não foi possível buscar as questões reais do vestibular. Tente novamente.");
-            } finally {
-                btnStart.disabled = false;
-            }
-        }
-
-        function renderSimuladoQuestion() {
-            if (simuladoIndex >= simuladoQuestions.length) {
-                showSimuladoResults();
-                return;
-            }
-            const q = simuladoQuestions[simuladoIndex];
-            document.getElementById('simulado-progress').innerText = `Questão ${simuladoIndex + 1} de ${simuladoQuestions.length}`;
-            document.getElementById('simulado-fonte-badge').innerText = `Fonte: ${q.referencia_oficial || 'Vestibular Oficial'}`;
-            document.getElementById('simulado-score').innerText = `Pontuação: ${simuladoScore}`;
-            
-            const qBox = document.getElementById('simulado-question-box');
-            document.getElementById('simulado-feedback-box').classList.add('hidden');
-            document.getElementById('simulado-btn-next').classList.add('hidden');
-
-            let html = `<h4 class="font-serif-machado text-lg md:text-xl font-semibold text-white mb-4">${q.question}</h4><div class="space-y-3">`;
-            q.options.forEach((opt, idx) => {
-                html += `<button onclick="checkSimuladoAnswer(${idx})" class="simulado-option-btn w-full text-left p-3.5 rounded-xl border border-slate-800 bg-slate-950 hover:bg-slate-800 text-sm text-slate-200 transition cursor-pointer">${opt}</button>`;
-            });
-            html += `</div>`;
-            qBox.innerHTML = html;
-        }
-
-        function checkSimuladoAnswer(selectedIdx) {
-            const q = simuladoQuestions[simuladoIndex];
-            const buttons = document.querySelectorAll('.simulado-option-btn');
-            const feedbackBox = document.getElementById('simulado-feedback-box');
-            const btnNext = document.getElementById('simulado-btn-next');
-
-            buttons.forEach(btn => btn.disabled = true);
-
-            if (selectedIdx === q.answer) {
-                buttons[selectedIdx].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-emerald-950/80 border border-emerald-800 text-emerald-200";
-                feedbackBox.innerHTML = `<strong>Correto!</strong> Referência Oficial: <em>${q.referencia_oficial}</em><br><br>${q.explanation}`;
-                simuladoScore++;
-            } else {
-                buttons[selectedIdx].classList.add('bg-rose-950', 'border-rose-600', 'text-rose-200');
-                buttons[q.answer].classList.add('bg-emerald-950', 'border-emerald-600', 'text-emerald-200');
-                feedbackBox.className = "p-4 rounded-xl text-sm font-medium bg-rose-950/80 border border-rose-800 text-rose-200";
-                feedbackBox.innerHTML = `<strong>Incorreto.</strong> Referência Oficial: <em>${q.referencia_oficial}</em><br><br>${q.explanation}`;
-            }
-            feedbackBox.classList.remove('hidden');
-            btnNext.classList.remove('hidden');
-            document.getElementById('simulado-score').innerText = `Pontuação: ${simuladoScore}`;
-        }
-
-        function nextSimuladoQuestion() {
-            simuladoIndex++;
-            renderSimuladoQuestion();
-        }
-
-        function showSimuladoResults() {
-            document.getElementById('simulado-container').classList.add('hidden');
-            document.getElementById('simulado-result-container').classList.remove('hidden');
-            document.getElementById('simulado-final-text').innerText = `Você acertou ${simuladoScore} de ${simuladoQuestions.length} questões reais no simulado oficial.`;
         }
 
         // --- CHAT LITERÁRIO ---
