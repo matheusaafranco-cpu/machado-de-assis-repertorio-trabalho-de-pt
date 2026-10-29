@@ -1,4 +1,4 @@
-[cite: 2]import os
+import os
 import json
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import HTMLResponse
@@ -141,7 +141,6 @@ def gerar_simulado(req: SimuladoRequest):
 
     except Exception as e:
         print(f"Exceção ao gerar simulado real: {str(e)}")
-        # Fallback de segurança com questões reais garantidas para Machado de Assis caso ocorra falha na API
         questoes_reais_fallback = [
             {
                 "question": "No conto 'Ideias de Canário', de Machado de Assis, o diálogo entre o narrador e o personagem central propõe uma reflexão irônica sobre:",
